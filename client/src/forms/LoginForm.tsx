@@ -58,7 +58,7 @@ const LoginForm = () => {
         <div className="mt-8">
           <Input
             name="email"
-            placeholder="Wpisz swój email"
+            placeholder="Please enter email"
             value={formik.values.email}
             onChange={formik.handleChange}
             icon="fas fa-envelope"
@@ -70,7 +70,7 @@ const LoginForm = () => {
         <div className="mt-8">
           <Input
             name="password"
-            placeholder="Wpisz swoje hasło"
+            placeholder="Please enter password"
             value={formik.values.password}
             onChange={formik.handleChange}
             icon="fas fa-lock"

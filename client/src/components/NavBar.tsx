@@ -23,6 +23,9 @@ const Navbar = () => {
             <a href={link.url}>{link.title}</a>
           </li>
         ))}
+        <Link to="/profile">
+          <Button variant="primary">Profile</Button>
+        </Link>
         <Link to="/login">
           <Button variant="primary">Sign Up</Button>
         </Link>

@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import AdoptionPage from "./pages/AdoptionPage";
 import AnimalsList from "./pages/AnimalsList";
+import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/profile" element={<AdminPage />} />
               <Route path="/animals/:id" element={<AdoptionPage />} />
               <Route path="/animals/" element={<AnimalsList />} />
             </Routes>

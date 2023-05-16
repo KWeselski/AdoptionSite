@@ -12,6 +12,8 @@ import partner_4 from "./partner_4.svg";
 import dog from "./dog.svg";
 import cat from "./cat.svg";
 import house from "./house.svg";
+import trash from "./trash.svg";
+import edit from "./edit.svg";
 
 export {
   logo,
@@ -28,4 +30,6 @@ export {
   dog,
   cat,
   house,
+  trash,
+  edit,
 };
