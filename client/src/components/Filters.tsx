@@ -5,6 +5,12 @@ const Filter = ({ children, label }) => (
   </div>
 );
 
+Filter.Header = ({ children }) => (
+  <div className="flex flex-col sm:flex-row items-center justify-between mb-2 gap-2">
+    {children}
+  </div>
+);
+
 Filter.Input = ({ name, value, onChange, placeholder, numeric }) => (
   <div className="mb-4">
     <label

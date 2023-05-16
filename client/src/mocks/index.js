@@ -70,3 +70,66 @@ export const AnimalData = [
     size: "Mały",
   },
 ];
+
+export const adoptionRequests = [
+  {
+    name: "Daisy",
+    email: "john.doe@example.com",
+    city: "San Francisco",
+    applicantName: "John Doe",
+  },
+  {
+    name: "Zoe",
+    email: "jane.doe@example.com",
+    city: "New York",
+    applicantName: "Jane Doe",
+  },
+  {
+    name: "Xena",
+    email: "bob.smith@example.com",
+    city: "Chicago",
+    applicantName: "Bob Smith",
+  },
+  {
+    name: "Max",
+    email: "alice.johnson@example.com",
+    city: "Los Angeles",
+    applicantName: "Alice Johnson",
+  },
+  {
+    name: "Luna",
+    email: "charlie.brown@example.com",
+    city: "San Diego",
+    applicantName: "Charlie Brown",
+  },
+  {
+    name: "Puppy",
+    email: "emma.watson@example.com",
+    city: "Seattle",
+    applicantName: "Emma Watson",
+  },
+  {
+    name: "Kitty",
+    email: "liam.neeson@example.com",
+    city: "Denver",
+    applicantName: "Liam Neeson",
+  },
+  {
+    name: "Ancymon",
+    email: "olivia.wilde@example.com",
+    city: "Boston",
+    applicantName: "Olivia Wilde",
+  },
+  {
+    name: "Boxer",
+    email: "george.clooney@example.com",
+    city: "Phoenix",
+    applicantName: "George Clooney",
+  },
+  {
+    name: "Czarek",
+    email: "jennifer.aniston@example.com",
+    city: "Philadelphia",
+    applicantName: "Jennifer Aniston",
+  },
+];

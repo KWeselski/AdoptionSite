@@ -12,7 +12,7 @@ import AdminPage from "./pages/AdminPage";
 
 function App() {
   return (
-    <div className="bg-[#F7FFE6] w-full overflow-hidden">
+    <div className="bg-[#f8f8f8] w-full overflow-hidden">
       <div className={`${styles.flexCenter}`}>
         <div className={`${styles.boxWidth}`}>
           <NavBar />

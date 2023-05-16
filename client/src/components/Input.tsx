@@ -1,21 +1,21 @@
-const Input = ({ name, placeholder, value, onChange, icon }) => {
-  return (
-    <div className="flex items-center bg-white rounded-full shadow-md">
-      {icon && (
-        <div className="p-2">
-          <i className={icon}></i>
-        </div>
-      )}
-      <input
-        type="text"
-        name={name}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        className="w-full px-3 py-2 rounded-r-full focus:outline-none"
-      />
-    </div>
-  );
-};
+const Input = ({ label, name, placeholder, value, onChange, icon }) => (
+  <div className="flex flex-col mb-1">
+    <label
+      className="block text-start text-gray-700 text-sm font-bold p-2"
+      htmlFor={label}
+      placeholder={placeholder}
+    >
+      {label}
+    </label>
+    <input
+      type="text"
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+    />
+  </div>
+);
 
 export default Input;

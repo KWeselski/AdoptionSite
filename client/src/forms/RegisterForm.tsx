@@ -3,6 +3,7 @@ import { useFormik } from "formik";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import * as Yup from "yup";
+import ErrorText from "../components/ErrorText";
 
 interface RegistrationValues {
   name: string;
@@ -69,7 +70,7 @@ const RegisterForm = () => {
             icon="fas fa-envelope"
           />
           {formik.touched.name && formik.errors.name && (
-            <p className="font-semibold">{formik.errors.name}</p>
+            <ErrorText>{formik.errors.name}</ErrorText>
           )}
         </div>
         <div className="mt-8">
@@ -81,7 +82,7 @@ const RegisterForm = () => {
             icon="fas fa-envelope"
           />
           {formik.touched.email && formik.errors.email && (
-            <p className="font-semibold">{formik.errors.email}</p>
+            <ErrorText>{formik.errors.email}</ErrorText>
           )}
         </div>
         <div className="mt-8">

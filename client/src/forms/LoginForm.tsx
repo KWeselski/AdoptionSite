@@ -3,6 +3,8 @@ import { useFormik } from "formik";
 import Button from "../components/Button";
 import Input from "../components/Input";
 import * as Yup from "yup";
+import ErrorText from "../components/ErrorText";
+import Field from "../components/Field";
 
 interface LoginValues {
   email: string;
@@ -55,7 +57,7 @@ const LoginForm = () => {
   return (
     <div>
       <form onSubmit={formik.handleSubmit}>
-        <div className="mt-8">
+        <Field>
           <Input
             name="email"
             placeholder="Please enter email"
@@ -64,10 +66,10 @@ const LoginForm = () => {
             icon="fas fa-envelope"
           />
           {formik.touched.email && formik.errors.email && (
-            <p className="font-semibold">{formik.errors.email}</p>
+            <ErrorText>{formik.errors.email}</ErrorText>
           )}
-        </div>
-        <div className="mt-8">
+        </Field>
+        <Field>
           <Input
             name="password"
             placeholder="Please enter password"
@@ -76,12 +78,12 @@ const LoginForm = () => {
             icon="fas fa-lock"
           />
           {formik.touched.password && formik.errors.password && (
-            <p className="font-semibold">{formik.errors.password}</p>
+            <ErrorText>{formik.errors.password}</ErrorText>
           )}
-        </div>
-        <div className="mt-8">
+        </Field>
+        <Field>
           <Button variant="primary">Login</Button>
-        </div>
+        </Field>
       </form>
     </div>
   );
