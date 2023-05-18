@@ -14,6 +14,7 @@ import cat from "./cat.svg";
 import house from "./house.svg";
 import trash from "./trash.svg";
 import edit from "./edit.svg";
+import exit from "./exit.svg";
 
 export {
   logo,
@@ -32,4 +33,5 @@ export {
   house,
   trash,
   edit,
+  exit,
 };

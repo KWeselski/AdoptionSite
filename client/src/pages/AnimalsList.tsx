@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import AnimalCard from "../components/AnimalCard";
-import { AnimalData } from "../mocks";
+import { useState } from "react";
+import PetsList from "../components/PetsList";
+
 import Filter from "../components/Filters";
 import Button from "../components/Button";
 import SectionHero from "../components/SectionHero";
@@ -76,9 +76,7 @@ const AnimalsList = () => {
         </div>
 
         <div className="w-full md:w-3/4 p-3 flex flex-wrap gap-3">
-          {AnimalData.map((animal, index) => (
-            <AnimalCard key={index} {...animal} />
-          ))}
+          <PetsList filters={filters} />
         </div>
       </div>
     </>

@@ -133,3 +133,37 @@ export const adoptionRequests = [
     applicantName: "Jennifer Aniston",
   },
 ];
+
+export const adoptionApplications = [
+  {
+    dogName: "Fido",
+    dogImage: "../src/assets/dog.jpg",
+    personalInformation: {
+      firstName: "Jan",
+      lastName: "Kowalski",
+      address: {
+        street: "ul. Kwiatowa 10",
+        city: "Warszawa",
+      },
+      phoneNumber: "+48 123 456 789",
+      email: "jan.kowalski@gmail.com",
+    },
+    homeInformation: {
+      type: "Dom",
+      ownership: "Własność",
+      yard: "Tak, ogrodzony",
+      children: "Nie",
+      otherPets: "Nie",
+    },
+    experienceWithDogs: {
+      previousPets: "Tak",
+      previousBreed: "Labrador",
+      durationOfOwnership: "10 lat",
+    },
+    careAndActivityPlans: {
+      dailyExercise: "2 godziny",
+      careDuringAbsence: "Profesjonalna opieka",
+      activityType: "Spacer, zabawy, szkolenia",
+    },
+  },
+];

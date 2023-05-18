@@ -46,7 +46,7 @@ const Pagination = ({ values, perPage, children }) => {
   );
 
   return (
-    <div>
+    <div className="flex w-full flex-col">
       {typeof children === "function" ? children(currentData) : children}
       <div className="flex justify-center mt-4">
         {pageNumbers.map((page, index) =>

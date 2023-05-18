@@ -1,4 +1,4 @@
-const Input = ({ label, name, placeholder, value, onChange, icon }) => (
+const Input = ({ label, name, placeholder, value, onChange, icon, tel }) => (
   <div className="flex flex-col mb-1">
     <label
       className="block text-start text-gray-700 text-sm font-bold p-2"
@@ -8,7 +8,7 @@ const Input = ({ label, name, placeholder, value, onChange, icon }) => (
       {label}
     </label>
     <input
-      type="text"
+      type={tel ? "tel" : "text"}
       name={name}
       placeholder={placeholder}
       value={value}

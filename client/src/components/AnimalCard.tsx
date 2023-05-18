@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface AnimalCardProps {
+  _id: string;
   image: string;
   name: string;
   city: string;
@@ -10,6 +11,7 @@ interface AnimalCardProps {
 }
 
 const AnimalCard: React.FC<AnimalCardProps> = ({
+  _id,
   image,
   name,
   city,
@@ -27,7 +29,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({
       <div className="flex-shrink-0 relative ">
         <img
           className="w-full  rounded-tl-lg rounded-tr-lg"
-          src={image}
+          src={"../src/assets/dog.jpg"}
           alt={name}
         />
         <div className="absolute top-2 left-2 bg-green-600 opacity-90 text-white font-bold py-1 px-2 rounded">
@@ -48,7 +50,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({
         )}
       </div>
       <div className="p-2">
-        <Link to={`/animals/${name}`}>
+        <Link to={`/animals/${_id}`}>
           <p
             className={`text-xl font-medium ${
               hover ? "text-green-400" : "text-black"
