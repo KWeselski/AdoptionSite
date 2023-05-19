@@ -29,7 +29,7 @@ const AnimalCard: React.FC<AnimalCardProps> = ({
       <div className="flex-shrink-0 relative ">
         <img
           className="w-full  rounded-tl-lg rounded-tr-lg"
-          src={"../src/assets/dog.jpg"}
+          src={image}
           alt={name}
         />
         <div className="absolute top-2 left-2 bg-green-600 opacity-90 text-white font-bold py-1 px-2 rounded">

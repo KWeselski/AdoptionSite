@@ -11,6 +11,7 @@ import axios from "axios";
 import Dialog from "../components/Dialog";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
+import ImageUpload from "../components/ImageUpload";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Add animal name"),
@@ -85,10 +86,22 @@ const ShelterDialog = ({ selectShelter, onClose }) => {
   );
 };
 
-const createPetAdoption = async (petData) => {
+const createPetAdoption = async (petData, image) => {
+  const formData = new FormData();
+  formData.append("image", image);
+
+  for (const key in petData) {
+    if (petData.hasOwnProperty(key)) {
+      formData.append(key, petData[key]);
+    }
+  }
   try {
-    const response = await axios.post("api/animals/add", petData);
-    console.log(response.data);
+    const response = await axios.post("api/animals/add", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response);
   } catch (error) {
     console.error(error);
   }
@@ -96,6 +109,7 @@ const createPetAdoption = async (petData) => {
 
 const petAdoptionForm = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [image, setImage] = useState(null);
   const [selectedShelter, setSelectShelter] = useState(null);
   const formik = useFormik({
     initialValues: {
@@ -110,14 +124,18 @@ const petAdoptionForm = () => {
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
-      createPetAdoption(values);
+      createPetAdoption(values, image);
     },
   });
 
   const handleSelectShelter = (shelter) => {
     setSelectShelter(shelter);
     setIsOpen(false);
-    formik.setFieldValue("shelter", shelter);
+    formik.setFieldValue("shelter", shelter._id);
+  };
+
+  const handleImageUpload = (image) => {
+    setImage(image);
   };
 
   return (
@@ -198,6 +216,9 @@ const petAdoptionForm = () => {
             {formik.errors.gender ? (
               <ErrorText>{formik.errors.gender}</ErrorText>
             ) : null}
+          </Field>
+          <Field>
+            <ImageUpload onFileSelect={handleImageUpload} />
           </Field>
           <Field>
             <Input

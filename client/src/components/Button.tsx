@@ -7,7 +7,13 @@ type ButtonProps = {
   icon?: string;
 };
 
-const Button: FC<ButtonProps> = ({ children, variant, onClick, icon }) => {
+const Button: FC<ButtonProps> = ({
+  children,
+  variant,
+  onClick,
+  icon,
+  type,
+}) => {
   let buttonClass = "";
 
   if (variant === "primary") {
@@ -19,7 +25,7 @@ const Button: FC<ButtonProps> = ({ children, variant, onClick, icon }) => {
   }
 
   return (
-    <button className={buttonClass} onClick={onClick}>
+    <button className={buttonClass} onClick={onClick} type={type}>
       {icon && (
         <span className="mr-2">
           <img className="w-8 h-8" src={icon} alt="button icon" />

@@ -1,3 +1,5 @@
-const Field = ({ children }) => <div className="mt-2">{children}</div>;
+const Field = ({ children, className }) => (
+  <div className={`${className} mt-2`}>{children}</div>
+);
 
 export default Field;

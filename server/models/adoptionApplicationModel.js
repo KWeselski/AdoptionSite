@@ -1,42 +1,45 @@
 import mongoose from "mongoose";
 const { Schema } = mongoose;
 
-const adoptionApplicationSchema = new Schema({
-  personalInformation: {
-    firstName: String,
-    lastName: String,
-    address: {
-      street: String,
-      city: String,
-      postalCode: String,
-      country: String,
+const adoptionApplicationSchema = new Schema(
+  {
+    personalInformation: {
+      firstName: { type: String, required: true },
+      lastName: { type: String, required: true },
+      phoneNumber: { type: String, required: true },
+      email: { type: String, required: true },
+      address: {
+        city: { type: String, required: true },
+        street: { type: String, required: true },
+      },
     },
-    phoneNumber: String,
-    email: String,
+    homeInformation: {
+      type: { type: String, required: true },
+      children: { type: String, required: true },
+    },
+    experience: {
+      previousPets: { type: String, required: true },
+      petDuration: { type: String, required: true },
+    },
+    careAndActivityPlans: {
+      dailyExercise: [{ type: String, required: true }],
+      activityType: [{ type: String, required: true }],
+    },
+    pet: {
+      type: Schema.Types.ObjectId,
+      ref: "PetAdoption",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["Pending", "Accepted", "Rejected"],
+      default: "Pending",
+    },
   },
-  homeInformation: {
-    type: String,
-    ownership: String,
-    yard: String,
-    children: String,
-    otherPets: String,
-  },
-  experienceWithDogs: {
-    previousPets: String,
-    previousBreed: String,
-    durationOfOwnership: String,
-  },
-  careAndActivityPlans: {
-    dailyExercise: String,
-    careDuringAbsence: String,
-    activityType: String,
-  },
-  status: {
-    type: String,
-    enum: ["Pending", "Accepted", "Rejected"],
-    default: "Pending",
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export const AdoptionApplication = mongoose.model(
   "AdoptionApplication",

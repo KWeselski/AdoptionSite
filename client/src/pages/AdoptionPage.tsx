@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import styles from "../styles";
 import Button from "../components/Button";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 const TableData = ({ label, value }) => (
   <div key={label} className="flex w-full py-2 border-b text-start items-start">
@@ -53,7 +53,7 @@ const AdoptionPage = () => {
         <div className="flex  flex-col sm:flex-row justify-around items-start p-6 gap-4">
           <div className="bg-white p-6 rounded-lg shadow-lg w-full">
             <img
-              src={"../src/assets/dog.jpg"}
+              src={pet.image}
               alt={pet.name}
               className="w-full h-[400px] object-contain mb-6 rounded"
             />
@@ -81,7 +81,9 @@ const AdoptionPage = () => {
               <strong>Email: </strong>
               {shelterData.email}
             </p>
-            <Button variant="primary">Contact</Button>
+            <Link to={`/application/${pet._id}`}>
+              <Button variant="primary">Send Application</Button>
+            </Link>
           </div>
         </div>
       </div>

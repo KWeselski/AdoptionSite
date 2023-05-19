@@ -9,6 +9,7 @@ import Register from "./pages/Register";
 import AdoptionPage from "./pages/AdoptionPage";
 import AnimalsList from "./pages/AnimalsList";
 import AdminPage from "./pages/AdminPage";
+import ApplicationPage from "./pages/ApplicationPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
               <Route path="/profile" element={<AdminPage />} />
               <Route path="/animals/:id" element={<AdoptionPage />} />
               <Route path="/animals/" element={<AnimalsList />} />
+              <Route path="/application/:id" element={<ApplicationPage />} />
             </Routes>
           </div>
         </div>
