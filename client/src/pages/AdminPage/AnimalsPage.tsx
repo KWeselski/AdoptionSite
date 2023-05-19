@@ -23,7 +23,6 @@ const AnimalsPage = ({ handleTab }) => {
           Add animal
         </Button>
       </div>
-
       <Pagination values={AnimalData} perPage={8}>
         {(currentData) => (
           <Table>
@@ -34,7 +33,7 @@ const AnimalsPage = ({ handleTab }) => {
               <Table.Header>Actions</Table.Header>
             </Table.Row>
             {currentData.map((request, index) => (
-              <Table.Row size={4}>
+              <Table.Row size={4} key={index}>
                 <Table.Cell primary>{request.name}</Table.Cell>
                 <Table.Cell>{request.breed}</Table.Cell>
                 <Table.Cell>{request.dateAdded}</Table.Cell>
