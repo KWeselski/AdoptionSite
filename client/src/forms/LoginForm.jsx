@@ -1,10 +1,6 @@
 import { useFormik } from "formik";
-import Button from "../components/Button";
-import Input from "../components/Input";
 import * as Yup from "yup";
-import ErrorText from "../components/ErrorText";
-import Field from "../components/Field";
-
+import {Button , Input, ErrorText, Field} from "../components";
 
 const LoginForm = () => {
   const validationSchema = Yup.object().shape({

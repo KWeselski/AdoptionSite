@@ -22,10 +22,11 @@ const getShelter = async (req, res) => {
 
 const getShelters = async (req, res) => {
   const { partial } = req.query;
-  console.log(partial);
-  const filter = partial ? "name city" : "name city email phoneNumber";
+  const filter = partial
+    ? { name: 1, "address.city": 1 }
+    : { name: 1, "address.city": 1, email: 1, phoneNumber: 1 };
   try {
-    const shelters = await Shelter.find({}, filter).sort({ name: 1 });
+    const shelters = await Shelter.find({}).select(filter).sort({ name: 1 });
     res.status(200).json(shelters);
   } catch (error) {
     res.status(500).json({ message: error.message });

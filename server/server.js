@@ -5,6 +5,7 @@ import connectDb from "./config/connect.js";
 import animalsRouter from "./routes/animals.js";
 import sheltersRouter from "./routes/shelters.js";
 import applicationsRouter from "./routes/applications.js";
+import { getHomeData } from "./controllers/homeController.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -13,11 +14,12 @@ app.use(express.json({ limit: "50mb" }));
 app.use(cors());
 
 cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET_KEY,
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
+app.get("/", getHomeData);
 app.use("/animals", animalsRouter);
 app.use("/applications", applicationsRouter);
 app.use("/shelters", sheltersRouter);

@@ -14,6 +14,11 @@ const TableData = ({ label, value }) => (
 
 const AdoptionPage = () => {
   const { id } = useParams();
+  const [pet, setPet] = useState(null);
+
+  useEffect(() => {
+    axios.get(`/api/animals/${id}`).then(({ data }) => setPet(data));
+  }, []);
 
   const shelterData = {
     name: "Schronisko dla bezdomnych zwierząt",
@@ -26,7 +31,7 @@ const AdoptionPage = () => {
   return (
     <div className={`${styles.flexStart}`}>
       <div className={`${styles.boxWidth}`}>
-        <Loader url={`animals/${id}`}>
+        <Loader data={pet}>
           {(pet) => (
             <>
               <section className="flex md:flex-row flex-col p-4 opacity-100 bg-hero-adoption bg-center bg-cover bg md:h-[370px] relative">

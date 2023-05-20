@@ -1,11 +1,14 @@
 import axios from "axios";
 
-export const setApplications = (pets) => {
-  return {
-    type: "SET_APPLICATIONS",
-    payload: pets,
-  };
-};
+export const setApplications = (pets) => ({
+  type: "SET_APPLICATIONS",
+  payload: pets,
+});
+
+export const deleteApplication = (id) => ({
+  type: "DELETE_APPLICATION",
+  payload: id,
+});
 
 export const fetchApplications = () => {
   return async (dispatch) => {
@@ -20,4 +23,14 @@ export const fetchApplications = () => {
       console.error(error);
     }
   };
+};
+
+export const reviewApplication = (id, accepted) => async (dispatch) => {
+  try {
+    await axios.put(`/api/applications/${id}`, { accepted });
+    dispatch(deleteApplication(id));
+    dispatch(fetchApplications());
+  } catch (error) {
+    console.error(error);
+  }
 };

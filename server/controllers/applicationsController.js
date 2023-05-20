@@ -1,8 +1,8 @@
 import { AdoptionApplication } from "../models/adoptionApplicationModel.js";
+import { PetAdoption } from "../models/petAdoptionModel.js";
 
 const createApplication = async (req, res) => {
   try {
-    console.log(req.body);
     const application = new AdoptionApplication(req.body);
     await application.save();
     res.status(201).json({ message: "Application created" });
@@ -17,9 +17,20 @@ const reviewApplication = async (req, res) => {
   const { accepted } = req.body;
   try {
     const application = await AdoptionApplication.findById(id);
-    accepted
-      ? (application.status = "Accepted")
-      : (application.status = "Rejected");
+    if (!application) {
+      return res.status(404).json({ message: "Application not found" });
+    }
+    if (accepted) {
+      application.status = "Accepted";
+      const pet = await PetAdoption.findById(application.pet);
+      if (!pet) {
+        return res.status(404).json({ message: "Pet not found" });
+      }
+      pet.status = "Adopted";
+      await pet.save();
+    } else {
+      application.status = "Rejected";
+    }
     await application.save();
     res.status(200).json({ message: "Application reviewed" });
   } catch (error) {

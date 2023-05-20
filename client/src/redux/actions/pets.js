@@ -7,6 +7,24 @@ export const setPets = (pets) => {
   };
 };
 
+export const deletePetSucess = (id) => {
+  return {
+    type: "DELETE_PET",
+    payload: id,
+  };
+};
+
+export const deletePet = (id) => {
+  return async (dispatch) => {
+    try {
+      await axios.delete(`api/animals/${id}`);
+      dispatch(deletePetSucess(id));
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
+
 export const fetchPets = () => {
   return async (dispatch) => {
     try {

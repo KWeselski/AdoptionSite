@@ -26,6 +26,7 @@ Filter.Input = ({ name, value, onChange, placeholder, numeric }) => (
       type={numeric ? "number" : "text"}
       name={name}
       value={value}
+      autoComplete="off"
       onChange={onChange}
     />
   </div>

@@ -1,18 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Input from "../components/Input";
-import Select from "../components/Select";
-import Button from "../components/Button";
-import ErrorText from "../components/ErrorText";
-import Field from "../components/Field";
-import TextArea from "../components/TextArea";
 import axios from "axios";
-import Dialog from "../components/Dialog";
-import Table from "../components/Table";
-import Pagination from "../components/Pagination";
-import ImageUpload from "../components/ImageUpload";
-import Loader from "../components/Loader";
+import { Input, Select, Button, ErrorText, Field, TextArea, Dialog, Table, Pagination, ImageUpload, Loader } from "../components";
+import { useSelector } from "react-redux";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Add animal name"),
@@ -29,12 +20,13 @@ const validationSchema = Yup.object({
 });
 
 const ShelterDialog = ({ selectShelter, onClose }) => {
+  const shelters = useSelector((state) => state.shelters);
   return (
-    <Loader url="shelters">
+    <Loader data={shelters}>
       {(shelters) => (
         <Dialog title="Select shelter" onClose={onClose}>
           <div className="flex w-full flex-col sm:flex-row justify-between items-center p-4">
-            <Pagination values={shelters} perPage={2}>
+            <Pagination values={shelters} perPage={4}>
               {(currentData) => (
                 <Table>
                   <Table.Row size={3}>
@@ -87,22 +79,24 @@ const createPetAdoption = async (petData, image) => {
   }
 };
 
-const petAdoptionForm = () => {
+const PetForm = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [image, setImage] = useState(null);
   const [selectedShelter, setSelectShelter] = useState(null);
   const formik = useFormik({
     initialValues: {
       name: "",
-      species: "",
-      gender: "",
+      species: "Dog",
+      gender: "Male",
       city: "",
       age: "",
-      size: "",
+      size: "Small",
       description: "",
       shelter: "",
     },
     validationSchema: validationSchema,
+    validateOnBlur: false,
+    validateOnChange: false,
     onSubmit: (values) => {
       createPetAdoption(values, image);
     },
@@ -238,4 +232,4 @@ const petAdoptionForm = () => {
   );
 };
 
-export default petAdoptionForm;
+export default PetForm;

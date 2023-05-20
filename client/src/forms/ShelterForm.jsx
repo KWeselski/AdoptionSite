@@ -1,9 +1,6 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import ErrorText from "../components/ErrorText";
-import Field from "../components/Field";
+import { Input, Button, ErrorText, Field } from "../components";
 import axios from "axios";
 
 const validationSchema = Yup.object({
@@ -14,8 +11,10 @@ const validationSchema = Yup.object({
   email: Yup.string()
     .matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, "Incorrect format")
     .required("Add email"),
-  city: Yup.string().required("Add city"),
-  street: Yup.string().required("Add street"),
+    address: Yup.object().shape({
+      city: Yup.string().required("Add city"),
+      street: Yup.string().required("Add street"),
+    }),
 });
 
 const createShelter = async (shelterData) => {
@@ -32,8 +31,10 @@ const shelterForm = () => {
       name: "",
       phoneNumber: "",
       email: "",
-      city: "",
-      street: "",
+      address: {
+        city: "",
+        street: ""
+      }
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -76,12 +77,12 @@ const shelterForm = () => {
           <Field>
             <Input
               label="City"
-              name="city"
+              name="address.city"
               onChange={formik.handleChange}
-              value={formik.values.city}
+              value={formik.values.address.city}
             />
-            {formik.errors.city ? (
-              <ErrorText>{formik.errors.city}</ErrorText>
+            {formik.errors.address?.city ? (
+              <ErrorText>{formik.errors.address.city}</ErrorText>
             ) : null}
           </Field>
         </div>
@@ -100,12 +101,12 @@ const shelterForm = () => {
           <Field>
             <Input
               label="Street"
-              name="street"
+              name="address.street"
               onChange={formik.handleChange}
-              value={formik.values.street}
+              value={formik.values.address.street}
             />
-            {formik.errors.street ? (
-              <ErrorText>{formik.errors.street}</ErrorText>
+            {formik.errors.address?.street ? (
+              <ErrorText>{formik.errors.address.street}</ErrorText>
             ) : null}
           </Field>
         </div>

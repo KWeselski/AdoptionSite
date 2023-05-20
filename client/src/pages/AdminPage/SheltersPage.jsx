@@ -1,18 +1,27 @@
-import Button from "../../components/Button";
 import { edit, trash } from "../../assets";
-import Action from "../../components/Action";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
-import Filter from "../../components/Filters";
 import axios from "axios";
-import Loader from "../../components/Loader";
+import { Action, Button, Filter, Loader, Pagination, Table } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchShelters, deleteShelter } from "../../redux/actions/shelters.js";
-import { useEffect } from "react";
+import { useEffect , useState} from "react";
 
 const SheltersPage = ({ handleTab }) => {
   const dispatch = useDispatch();
   const shelters = useSelector((state) => state.shelters);
+  const [filters, setFilters] = useState({
+    name: "",
+    city: "",
+  });
+  const handleChange = (event) => {
+    setFilters({
+      ...filters,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const filteredShelters = shelters.filter((shelter) => {
+    return shelter.name.toLowerCase().includes(filters.name.toLowerCase()) && shelter.address.city.toLowerCase().includes(filters.city.toLowerCase());
+  });
+
   const onEdit = (id) => {};
   const onDelete = async (id) => {
     try {
@@ -28,14 +37,13 @@ const SheltersPage = ({ handleTab }) => {
   }, [dispatch]);
 
   return (
-    <Loader data={shelters}>
+    <Loader data={filteredShelters}>
       {(shelters) => (
         <div className="bg-white p-6 rounded-lg shadow">
           <div className="flex flex-col sm:flex-row justify-between items-center p-4">
             <Filter.Header>
-              <Filter.Input name="name" value={""} onChange={onDelete} />
-              <Filter.Input name="city" value={""} onChange={onDelete} />
-              <Button variant="primary">Search</Button>
+              <Filter.Input name="name" value={filters.name} onChange={handleChange} />
+              <Filter.Input name="city" value={filters.city} onChange={handleChange} />
             </Filter.Header>
             <Button variant="primary" onClick={() => handleTab("addShelter")}>
               Add shelter
@@ -51,16 +59,16 @@ const SheltersPage = ({ handleTab }) => {
                   <Table.Header>Phone Number</Table.Header>
                   <Table.Header>Actions</Table.Header>
                 </Table.Row>
-                {currentData.map((request, index) => (
+                {currentData.map(({name, address, email, phoneNumber, _id}, index) => (
                   <Table.Row size={4} key={index}>
-                    <Table.Cell primary>{request.name}</Table.Cell>
-                    <Table.Cell>{request.city}</Table.Cell>
-                    <Table.Cell>{request.email}</Table.Cell>
-                    <Table.Cell>{request.phoneNumber}</Table.Cell>
+                    <Table.Cell primary>{name}</Table.Cell>
+                    <Table.Cell>{address.city}</Table.Cell>
+                    <Table.Cell>{email}</Table.Cell>
+                    <Table.Cell>{phoneNumber}</Table.Cell>
                     <Table.Actions>
-                      <Action onClick={onEdit(request._id)} icon={edit} />
+                      <Action onClick={onEdit(_id)} icon={edit} />
                       <Action
-                        onClick={() => onDelete(request._id)}
+                        onClick={() => onDelete(_id)}
                         icon={trash}
                       />
                     </Table.Actions>

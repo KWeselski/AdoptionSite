@@ -1,5 +1,6 @@
 import cloudinary from "cloudinary";
 import { PetAdoption } from "../models/petAdoptionModel.js";
+import { AdoptionApplication } from "../models/adoptionApplicationModel.js";
 
 const AVAILABLE = "Available";
 
@@ -15,6 +16,17 @@ const createPetAdoption = async (req, res) => {
     console.log(err);
     await petAdoption.deleteOne({ _id: petAdoption._id });
     res.status(400).json({ error: "Unable to create pet for adoption" });
+  }
+};
+
+const deletePet = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await PetAdoption.findByIdAndDelete(id);
+    await AdoptionApplication.deleteMany({ pet: id });
+    res.status(200).json({ message: "Pet has been deleted" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 };
 
@@ -45,8 +57,9 @@ const getPets = async (req, res) => {
 
 const getPetsManage = async (req, res) => {
   try {
-    console.log("elo");
-    const animals = await PetAdoption.find();
+    const animals = await PetAdoption.find({}, "name breed status").sort({
+      createdAt: -1,
+    });
     res.status(200).json(animals);
   } catch (error) {
     console.log(error);
@@ -54,4 +67,4 @@ const getPetsManage = async (req, res) => {
   }
 };
 
-export { createPetAdoption, getPet, getPets, getPetsManage };
+export { createPetAdoption, deletePet, getPet, getPets, getPetsManage };

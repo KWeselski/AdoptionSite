@@ -1,7 +1,8 @@
-import Button from "../../components/Button";
-import Dialog from "../../components/Dialog";
-import Loader from "../../components/Loader";
+import { Button, Dialog, Loader } from "../../components";
+import { useCallback, useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import axios from "axios";
+import { reviewApplication } from "../../redux/actions/applications";
 
 const TableData = ({ label, children }) => (
   <div key={label} className="flex w-full py-2 border-b text-start items-start">
@@ -11,73 +12,83 @@ const TableData = ({ label, children }) => (
 );
 
 const AplicationReviewPage = ({ id, onClose }) => {
-  const reviewApplication = (accepted = false) => {
-    axios
-      .put(`/api/applications/${id}`, { accepted: accepted })
-      .then(() => {
-        onClose();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  };
+  const dispatch = useDispatch();
+  const [application, setApplication] = useState(null);
+
+  useEffect(() => {
+    const fetchApplication = async () => {
+      try {
+        const response = await axios.get(`/api/applications/${id}`);
+        setApplication(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchApplication();
+  }, [id]);
+
+
+  const handleReviewApplication = useCallback((accepted = false) => {
+    dispatch(reviewApplication(id, accepted));
+    onClose();
+  }, [id, dispatch, onClose]);
 
   return (
-    <Loader url={`applications/${id}`}>
-      {(application) => (
+    <Loader data={application}>
+      { ({ pet, personalInformation, homeInformation, experience, careAndActivityPlans }) => (
         <Dialog onClose={onClose}>
           <div className="p-4">
             <h2 className="text-[42px] text-green-700 text-center p-2 font-bold">
-              {application.pet.name}
+              {pet.name}
             </h2>
             <img
-              src={application.pet.image}
-              alt={application.pet.name}
+              src={pet.image}
+              alt={pet.name}
               className="w-full h-[400px] object-contain mb-6 rounded"
             />
             <div className="flex flex-col items-start">
               <TableData label="Name">
-                {application.personalInformation.firstName}
+                {personalInformation.firstName}
               </TableData>
               <TableData label="Name">
-                {application.personalInformation.lastName}
+                {personalInformation.lastName}
               </TableData>
               <TableData label="City">
-                {application.personalInformation.address.city}
+                {personalInformation.address.city}
               </TableData>
               <TableData label="Street">
-                {application.personalInformation.address.street}
+                {personalInformation.address.street}
               </TableData>
               <TableData label="Phone">
-                {application.personalInformation.phoneNumber}
+                {personalInformation.phoneNumber}
               </TableData>
               <TableData label="Email">
-                {application.personalInformation.email}
+                {personalInformation.email}
               </TableData>
               <TableData label="Home type">
-                {application.homeInformation.type}
+                {homeInformation.type}
               </TableData>
               <TableData label="Childrens">
-                {application.homeInformation.children}
+                {homeInformation.children}
               </TableData>
               <TableData label="Previous Pets">
-                {application.experience.previousPets}
+                {experience.previousPets}
               </TableData>
               <TableData label="Pet duration">
-                {application.experience.petDuration}
+                {experience.petDuration}
               </TableData>
               <TableData label="Activity plans">
-                {application.careAndActivityPlans.activityType.join(", ")}
+                {careAndActivityPlans.activityType.join(", ")}
               </TableData>
               <TableData label="Daily exercises plans">
-                {application.careAndActivityPlans.dailyExercise.join(", ")}
+                {careAndActivityPlans.dailyExercise.join(", ")}
               </TableData>
             </div>
             <div className="flex flex-row items-center justify-around w-full mt-4">
-              <Button variant="primary" onClick={() => reviewApplication()}>
+              <Button variant="primary" onClick={() => handleReviewApplication()}>
                 Reject
               </Button>
-              <Button variant="primary" onClick={() => reviewApplication(true)}>
+              <Button variant="primary" onClick={() => handleReviewApplication(true)}>
                 Accept
               </Button>
             </div>

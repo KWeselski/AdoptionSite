@@ -11,8 +11,8 @@ const ShelterSchema = new mongoose.Schema(
       required: false,
     },
     address: {
-      street: String,
-      city: String,
+      city: { type: String, required: true },
+      street: { type: String, required: true },
     },
     email: {
       type: String,

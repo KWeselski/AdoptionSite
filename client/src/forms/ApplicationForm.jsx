@@ -1,12 +1,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import Input from "../components/Input";
-import Button from "../components/Button";
-import ErrorText from "../components/ErrorText";
-import Select from "../components/Select";
-import Field from "../components/Field";
+import { Input, Button, ErrorText, Select, Field, Checkbox } from "../components";
 import axios from "axios";
-import Checkbox from "../components/Checkbox";
 import styles from "../styles";
 import { useParams } from "react-router-dom";
 
@@ -52,7 +47,7 @@ const createApplication = async (applicationData, petId) => {
   }
 };
 
-const applicationForm = () => {
+const ApplicationForm = () => {
   const { id } = useParams();
 
   const formik = useFormik({
@@ -246,4 +241,4 @@ const applicationForm = () => {
   );
 };
 
-export default applicationForm;
+export default ApplicationForm;

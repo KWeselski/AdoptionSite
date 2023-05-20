@@ -1,9 +1,8 @@
-import AddAnimalForm from "../../forms/AddAnimalForm";
-import AddShelterFrom from "../../forms/AddShelterForm";
+import { ShelterForm, PetForm } from "../../forms";
 
 const components = {
-  addShelter: <AddShelterFrom />,
-  addAnimal: <AddAnimalForm />,
+  addShelter: <ShelterForm />,
+  addAnimal: <PetForm />,
 };
 
 const AdminForms = ({ type }) => (

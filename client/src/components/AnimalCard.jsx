@@ -12,13 +12,13 @@ const AnimalCard = ({
 
   return (
     <div
-      className="max-w-sm mx-auto bg-white shadow-md  rounded-tl-lg rounded-tr-lg flex flex-col items-center hover:shadow-lg w-[240px] transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer"
+      className="max-w-sm mx-auto bg-white shadow-md  rounded-tl-lg rounded-tr-lg flex flex-col justify-between items-center hover:shadow-lg w-[240px] transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
       <div className="flex-shrink-0 relative ">
         <img
-          className="w-full  rounded-tl-lg rounded-tr-lg"
+          className="w-full object-contain h-[360px] rounded-tl-lg rounded-tr-lg"
           src={image}
           alt={name}
         />

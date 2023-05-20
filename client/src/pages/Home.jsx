@@ -2,8 +2,28 @@ import styles from "../styles";
 import { partners, statistics } from "../constants";
 import PetsList from "../components/PetsList";
 import SectionHero from "../components/SectionHero";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const Home = () => {
+  const [data, setData] = useState({
+    pets: [],
+    stats: {
+      dogsCount: 0,
+      catsCount: 0,
+      adoptedCount: 0,
+    }
+  })
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios.get("/api/");
+      setData(result.data);
+    };
+    fetchData();
+  }, []);
+
+
   return (
     <>
       <section className="flex md:flex-row flex-col p-4 bg-hero-image bg-center bg-cover bg-no-repeat bg h-[370px] relative">
@@ -21,7 +41,7 @@ const Home = () => {
       />
       <section className="flex md:flex-row flex-col p-4 ">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          <PetsList partial limit={12} />
+          <PetsList pets={data.pets} />
         </div>
       </section>
       <SectionHero
@@ -46,7 +66,7 @@ const Home = () => {
                   />
                   <span className="text-xl">
                     <p className="text-green-700 font-bold text-[32px] p-2 animate-fade-in-up">
-                      2000
+                      {data.stats[statistic.key]}
                     </p>
                     <span className="text-gray-500 font-semibold animate-fade-in-up">
                       {statistic.title}

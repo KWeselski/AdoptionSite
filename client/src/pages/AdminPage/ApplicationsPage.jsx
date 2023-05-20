@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../components/Button";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
 import AplicationReviewPage from "./AplicationReviewPage";
-import Loader from "../../components/Loader";
+import { Button, Pagination, Table, Loader } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchApplications } from "../../redux/actions/applications.js";
 

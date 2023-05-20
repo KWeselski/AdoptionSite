@@ -1,38 +1,54 @@
-import Button from "../../components/Button";
-import { AnimalData } from "../../mocks";
 import { edit, trash } from "../../assets";
-import Action from "../../components/Action";
-import Pagination from "../../components/Pagination";
-import Table from "../../components/Table";
-import Filter from "../../components/Filters";
-import Loader from "../../components/Loader";
+import { Action, Button, Filter, Loader, Pagination, Table } from "../../components";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPets } from "../../redux/actions/pets.js";
-import { useEffect } from "react";
+import { fetchPets, deletePet } from "../../redux/actions/pets.js";
+import { useState, useEffect } from "react";
+import { useCallback } from "react";
 
 const AnimalsPage = ({ handleTab }) => {
   const dispatch = useDispatch();
   const pets = useSelector((state) => state.pets);
+  const [filters, setFilters] = useState({
+    name: "",
+    breed: "",
+    status: "Available",
+  });
+
+  const handleChange = (event) => {
+    setFilters({
+      ...filters,
+      [event.target.name]: event.target.value,
+    });
+  };
+  const filteredPets = pets.filter((pet) => {
+    return pet.name.toLowerCase().includes(filters.name.toLowerCase()) && pet.breed.toLowerCase().includes(filters.breed.toLowerCase()) && pet.status === filters.status;
+  });
+
   const onEdit = (id) => {};
-  const onDelete = (id) => {};
+
+  const onDelete = useCallback(async (id) => {
+    try {
+      dispatch(deletePet(id));
+    }
+    catch (error) {
+      console.error(error);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    if (!pets || pets.length === 0) {
-      dispatch(fetchPets());
-    }
+    dispatch(fetchPets());
   }, [dispatch]);
 
   return (
     <div className="bg-white p-6 rounded-lg shadow">
-      <Loader data={pets}>
+      <Loader data={filteredPets}>
         {(animals) => (
           <>
             <div className="flex flex-col sm:flex-row justify-between items-center p-4">
               <Filter.Header>
-                <Filter.Input name="name" value={""} onChange={onDelete} />
-                <Filter.Input name="breed" value={""} onChange={onDelete} />
-                <Filter.Input name="date" value={""} onChange={onDelete} />
-                <Button variant="primary">Search</Button>
+                <Filter.Input name="name" value={filters.name} onChange={handleChange} />
+                <Filter.Input name="breed" value={filters.breed} onChange={handleChange} />
+                <Filter.Select name="status" value={filters.status} onChange={handleChange} options={['Adopted', 'Available']} />
               </Filter.Header>
               <Button variant="primary" onClick={() => handleTab("addAnimal")}>
                 Add animal
@@ -47,14 +63,14 @@ const AnimalsPage = ({ handleTab }) => {
                     <Table.Header>Status</Table.Header>
                     <Table.Header>Actions</Table.Header>
                   </Table.Row>
-                  {currentData.map(({ name, breed, status, _id }, index) => (
-                    <Table.Row size={4} key={index}>
+                  {currentData.map(({ name, breed, status, _id }) => (
+                    <Table.Row size={4} key={_id}>
                       <Table.Cell primary>{name}</Table.Cell>
                       <Table.Cell>{breed}</Table.Cell>
                       <Table.Cell>{status}</Table.Cell>
                       <Table.Actions>
-                        <Action onClick={onEdit(_id)} icon={edit} />
-                        <Action onClick={onDelete(_id)} icon={trash} />
+                        <Action onClick={() => onEdit(_id)} icon={edit} />
+                        <Action onClick={() => onDelete(_id)} icon={trash} />
                       </Table.Actions>
                     </Table.Row>
                   ))}

@@ -13,11 +13,11 @@ import {
 
 export const navLinks = [
   {
-    url: "how-helps",
+    url: "/how-helps",
     title: "How you can help?",
   },
   {
-    url: "animals",
+    url: "/animals",
     title: "Animals for adoption",
   },
 ];
@@ -107,14 +107,17 @@ export const partners = [
 export const statistics = [
   {
     icon: dog,
+    key: "dogsCount",
     title: "Dogs looking for a home",
   },
   {
     icon: cat,
+    key: "catsCount",
     title: "Cats looking for a home",
   },
   {
     icon: house,
+    key: "adoptedCount",
     title: "Animals adopted",
   },
 ];

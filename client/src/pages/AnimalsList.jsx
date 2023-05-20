@@ -1,11 +1,9 @@
 import { useState } from "react";
-import PetsList from "../components/PetsList";
-
-import Filter from "../components/Filters";
-import Button from "../components/Button";
-import SectionHero from "../components/SectionHero";
+import { SectionHero, Filter, Button, PetsList, Pagination } from "../components";
+import axios from "axios";
 
 const AnimalsList = () => {
+  const [animals, setAnimals] = useState([]);
   const [filters, setFilters] = useState({
     name: "",
     city: "",
@@ -21,6 +19,13 @@ const AnimalsList = () => {
       ...filters,
       [event.target.name]: event.target.value,
     });
+  };
+
+  const handleSearch = () => {
+    const response = axios.get("/api/animals", {
+      params: filters,
+    });
+    setAnimals(response.data);
   };
 
   return (
@@ -71,12 +76,16 @@ const AnimalsList = () => {
               value={filters.breed}
               onChange={handleChange}
             />
-            <Button variant="primary">Search</Button>
+            <Button variant="primary" onClick={handleSearch}>Search</Button>
           </Filter>
         </div>
 
         <div className="w-full md:w-3/4 p-3 flex flex-wrap gap-3">
-          <PetsList filters={filters} />
+          <Pagination values={animals} perPage={8}>
+            {(pets) => (
+                <PetsList pets={pets} />
+            )}
+            </Pagination>
         </div>
       </div>
     </>
