@@ -9,8 +9,8 @@ const ImageUpload = ({ onFileSelect }) => {
   };
 
   return (
-    <div>
-      <input type="file" onChange={fileSelectHandler} />
+    <div className='mt-10 flex flex-col items-center justify-center gap-5'>
+      <input type="file" onChange={fileSelectHandler}  />
       {previewUrl && <img src={previewUrl} alt="Preview" width="200px" />}
     </div>
   );

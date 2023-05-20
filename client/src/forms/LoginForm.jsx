@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useFormik } from "formik";
 import Button from "../components/Button";
 import Input from "../components/Input";
@@ -6,10 +5,6 @@ import * as Yup from "yup";
 import ErrorText from "../components/ErrorText";
 import Field from "../components/Field";
 
-interface LoginValues {
-  email: string;
-  password: string;
-}
 
 const LoginForm = () => {
   const validationSchema = Yup.object().shape({
@@ -19,30 +14,8 @@ const LoginForm = () => {
     password: Yup.string().required("Please enter password"),
   });
 
-  const onSubmit = async ({ email, password }: LoginValues) => {
-    // try {
-    //   const response = await axios.post("/api/user/login", {
-    //     email,
-    //     password,
-    //   });
-    //   const data = response.data;
-    //   if (response.status === 201) {
-    //     const { token, expiresIn, username } = data;
-    //     const expirationDate = new Date(
-    //       new Date().getTime() + expiresIn * 1000
-    //     );
-    //     localStorage.setItem("token", token);
-    //     localStorage.setItem("username", username);
-    //     localStorage.setItem("expiresIn", expirationDate.toISOString());
-    //     dispatch(login(token, username, expirationDate.toISOString()));
-    //     navigate("/");
-    //   } else {
-    //     console.log("Error: " + data.message);
-    //   }
-    // } catch (error) {
-    //   console.error(error);
-    // }
-  };
+  const onSubmit = async ({ email, password }) => {}
+
 
   const formik = useFormik({
     initialValues: {

@@ -22,6 +22,7 @@ const getShelter = async (req, res) => {
 
 const getShelters = async (req, res) => {
   const { partial } = req.query;
+  console.log(partial);
   const filter = partial ? "name city" : "name city email phoneNumber";
   try {
     const shelters = await Shelter.find({}, filter).sort({ name: 1 });

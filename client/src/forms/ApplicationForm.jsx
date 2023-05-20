@@ -45,7 +45,6 @@ const validationSchema = Yup.object({
 });
 
 const createApplication = async (applicationData, petId) => {
-  console.log(applicationData)
   try {
     await axios.post("/api/applications/add", {pet: petId, ...applicationData});
   } catch (error) {

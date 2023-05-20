@@ -12,6 +12,7 @@ import Dialog from "../components/Dialog";
 import Table from "../components/Table";
 import Pagination from "../components/Pagination";
 import ImageUpload from "../components/ImageUpload";
+import Loader from "../components/Loader";
 
 const validationSchema = Yup.object({
   name: Yup.string().required("Add animal name"),
@@ -28,61 +29,40 @@ const validationSchema = Yup.object({
 });
 
 const ShelterDialog = ({ selectShelter, onClose }) => {
-  const [shelters, setShelters] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const fetchShelters = async () => {
-      try {
-        const response = await axios.get("api/shelters", {
-          params: {
-            partial: true,
-          },
-        });
-        setShelters(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error(error);
-        setLoading(false);
-      }
-    };
-    fetchShelters();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <Dialog title="Select shelter" onClose={onClose}>
-      <div className="flex w-full flex-col sm:flex-row justify-between items-center p-4">
-        <Pagination values={shelters} perPage={2}>
-          {(currentData) => (
-            <Table>
-              <Table.Row size={3}>
-                <Table.Header>Name</Table.Header>
-                <Table.Header>City</Table.Header>
-                <Table.Header>Actions</Table.Header>
-              </Table.Row>
-              {currentData.map((request, index) => (
-                <Table.Row size={3} key={index}>
-                  <Table.Cell primary>{request.name}</Table.Cell>
-                  <Table.Cell>{request.city}</Table.Cell>
-                  <Table.Actions>
-                    <Button
-                      variant="primary"
-                      onClick={() => selectShelter(request)}
-                    >
-                      Select
-                    </Button>
-                  </Table.Actions>
-                </Table.Row>
-              ))}
-            </Table>
-          )}
-        </Pagination>
-      </div>
-    </Dialog>
+    <Loader url="shelters">
+      {(shelters) => (
+        <Dialog title="Select shelter" onClose={onClose}>
+          <div className="flex w-full flex-col sm:flex-row justify-between items-center p-4">
+            <Pagination values={shelters} perPage={2}>
+              {(currentData) => (
+                <Table>
+                  <Table.Row size={3}>
+                    <Table.Header>Name</Table.Header>
+                    <Table.Header>City</Table.Header>
+                    <Table.Header>Actions</Table.Header>
+                  </Table.Row>
+                  {currentData.map((request, index) => (
+                    <Table.Row size={3} key={index}>
+                      <Table.Cell primary>{request.name}</Table.Cell>
+                      <Table.Cell>{request.city}</Table.Cell>
+                      <Table.Actions>
+                        <Button
+                          variant="primary"
+                          onClick={() => selectShelter(request)}
+                        >
+                          Select
+                        </Button>
+                      </Table.Actions>
+                    </Table.Row>
+                  ))}
+                </Table>
+              )}
+            </Pagination>
+          </div>
+        </Dialog>
+      )}
+    </Loader>
   );
 };
 
@@ -180,6 +160,9 @@ const petAdoptionForm = () => {
               <ErrorText>{formik.errors.city}</ErrorText>
             ) : null}
           </Field>
+          <Field className={"mt-10"}>
+            <ImageUpload onFileSelect={handleImageUpload} />
+          </Field>
         </div>
         <div className="w-full md:w-1/2">
           <Field>
@@ -218,9 +201,6 @@ const petAdoptionForm = () => {
             ) : null}
           </Field>
           <Field>
-            <ImageUpload onFileSelect={handleImageUpload} />
-          </Field>
-          <Field>
             <Input
               label="Shelter"
               name="shelter"
@@ -247,12 +227,10 @@ const petAdoptionForm = () => {
       </Field>
       {isOpen ? (
         <ShelterDialog
-          open={isOpen}
           selectShelter={handleSelectShelter}
           onClose={() => setIsOpen(false)}
         />
       ) : null}
-
       <Field>
         <Button variant="primary">Add Animal</Button>
       </Field>

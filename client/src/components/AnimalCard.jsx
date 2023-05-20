@@ -1,16 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-
-interface AnimalCardProps {
-  _id: string;
-  image: string;
-  name: string;
-  city: string;
-  age: number;
-  size: string;
-}
-
-const AnimalCard: React.FC<AnimalCardProps> = ({
+const AnimalCard = ({
   _id,
   image,
   name,

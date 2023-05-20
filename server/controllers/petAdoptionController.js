@@ -43,4 +43,15 @@ const getPets = async (req, res) => {
   }
 };
 
-export { createPetAdoption, getPet, getPets };
+const getPetsManage = async (req, res) => {
+  try {
+    console.log("elo");
+    const animals = await PetAdoption.find();
+    res.status(200).json(animals);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export { createPetAdoption, getPet, getPets, getPetsManage };
