@@ -1,19 +1,19 @@
-import axios from "axios";
+import axios from 'axios';
 
 export const setApplications = (pets) => ({
-  type: "SET_APPLICATIONS",
+  type: 'SET_APPLICATIONS',
   payload: pets,
 });
 
 export const deleteApplication = (id) => ({
-  type: "DELETE_APPLICATION",
+  type: 'DELETE_APPLICATION',
   payload: id,
 });
 
 export const fetchApplications = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get("api/applications", {
+      const res = await axios.get('api/applications', {
         params: {
           partial: true,
         },

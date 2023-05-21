@@ -1,5 +1,6 @@
-import RegisterForm from "../forms/RegisterForm";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+import RegisterForm from '../forms/RegisterForm';
 
 const Register = () => (
   <div className="flex justify-center">

@@ -1,32 +1,50 @@
-import { useState } from "react";
-import { SectionHero, Filter, Button, PetsList, Pagination } from "../components";
-import axios from "axios";
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
+
+import {
+  SectionHero,
+  Filter,
+  Button,
+  PetsList,
+  Pagination,
+} from '../components';
 
 const AnimalsList = () => {
   const [animals, setAnimals] = useState([]);
   const [filters, setFilters] = useState({
-    name: "",
-    city: "",
-    species: "Dog",
-    gender: "Male",
-    size: "Small",
-    age: "",
-    breed: "",
+    name: '',
+    city: '',
+    species: '',
+    gender: '',
+    size: '',
+    age: '',
+    breed: '',
   });
 
   const handleChange = (event) => {
+    const { name, value } = event.target;
+
     setFilters({
       ...filters,
-      [event.target.name]: event.target.value,
+      [name]: value === 'All' ? '' : value,
     });
   };
 
-  const handleSearch = () => {
-    const response = axios.get("/api/animals", {
+  const handleSearch = async () => {
+    const response = await axios.get('/api/animals', {
       params: filters,
     });
     setAnimals(response.data);
   };
+
+  useEffect(() => {
+    const fetchAnimals = async () => {
+      const response = await axios.get('/api/animals');
+      setAnimals(response.data);
+    };
+    fetchAnimals();
+  }, []);
 
   return (
     <>
@@ -51,19 +69,19 @@ const AnimalsList = () => {
               name="species"
               value={filters.species}
               onChange={handleChange}
-              options={["Dog", "Cat", "Other"]}
+              options={['All', 'Dog', 'Cat']}
             />
             <Filter.Select
               name="gender"
               value={filters.gender}
               onChange={handleChange}
-              options={["Male", "Female"]}
+              options={['All', 'Male', 'Female']}
             />
             <Filter.Select
               name="size"
               value={filters.size}
               onChange={handleChange}
-              options={["Small", "Medium", "Large"]}
+              options={['All', 'Small', 'Medium', 'Large']}
             />
             <Filter.Input
               name="age"
@@ -76,16 +94,23 @@ const AnimalsList = () => {
               value={filters.breed}
               onChange={handleChange}
             />
-            <Button variant="primary" onClick={handleSearch}>Search</Button>
+            <Button variant="primary" onClick={handleSearch}>
+              Search
+            </Button>
           </Filter>
         </div>
-
-        <div className="w-full md:w-3/4 p-3 flex flex-wrap gap-3">
-          <Pagination values={animals} perPage={8}>
-            {(pets) => (
-                <PetsList pets={pets} />
-            )}
+        <div className="w-full md:w-3/4">
+          {animals && animals.length > 1 ? (
+            <Pagination values={animals} perPage={6}>
+              {(pets) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
+                  <PetsList pets={pets} />
+                </div>
+              )}
             </Pagination>
+          ) : (
+            <div className="w-full flex">Not found</div>
+          )}
         </div>
       </div>
     </>

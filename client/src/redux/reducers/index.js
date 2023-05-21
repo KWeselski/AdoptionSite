@@ -1,8 +1,8 @@
-import applicationsReducer from "./applicationsReducer";
-import sheltersReducer from "./sheltersReducer";
-import petsReducer from "./petsReducer";
+import { combineReducers } from 'redux';
 
-import { combineReducers } from "redux";
+import applicationsReducer from './applicationsReducer';
+import petsReducer from './petsReducer';
+import sheltersReducer from './sheltersReducer';
 
 const rootReducer = combineReducers({
   applications: applicationsReducer,

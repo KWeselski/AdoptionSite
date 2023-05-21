@@ -1,15 +1,15 @@
-import "./App.css";
-import NavBar from "./components/NavBar";
-import Home from "./pages/Home";
-import { Route, Routes } from "react-router-dom";
-import styles from "./styles";
-import Footer from "./components/Footer";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import AdoptionPage from "./pages/AdoptionPage";
-import AnimalsList from "./pages/AnimalsList";
-import AdminPage from "./pages/AdminPage";
-import ApplicationPage from "./pages/ApplicationPage";
+import { Route, Routes } from 'react-router-dom';
+
+import './App.css';
+import { Footer, NavBar } from './components';
+import AdminPage from './pages/AdminPage';
+import AdoptionPage from './pages/AdoptionPage';
+import AnimalsList from './pages/AnimalsList';
+import ApplicationPage from './pages/ApplicationPage';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import styles from './styles';
 
 function App() {
   return (

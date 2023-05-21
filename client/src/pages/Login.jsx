@@ -1,5 +1,6 @@
-import LoginForm from "../forms/LoginForm";
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
+
+import LoginForm from '../forms/LoginForm';
 
 const Login = () => (
   <div className=" flex justify-center h-screen">
