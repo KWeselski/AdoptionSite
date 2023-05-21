@@ -1,8 +1,10 @@
-import { Button, Dialog, Loader } from "../../components";
-import { useCallback, useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
-import axios from "axios";
-import { reviewApplication } from "../../redux/actions/applications";
+import { useCallback, useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import axios from 'axios';
+
+import { Button, Dialog, Loader } from '../../components';
+import { reviewApplication } from '../../redux/actions/applications';
 
 const TableData = ({ label, children }) => (
   <div key={label} className="flex w-full py-2 border-b text-start items-start">
@@ -27,15 +29,23 @@ const AplicationReviewPage = ({ id, onClose }) => {
     fetchApplication();
   }, [id]);
 
-
-  const handleReviewApplication = useCallback((accepted = false) => {
-    dispatch(reviewApplication(id, accepted));
-    onClose();
-  }, [id, dispatch, onClose]);
+  const handleReviewApplication = useCallback(
+    (accepted = false) => {
+      dispatch(reviewApplication(id, accepted));
+      onClose();
+    },
+    [id, dispatch, onClose]
+  );
 
   return (
     <Loader data={application}>
-      { ({ pet, personalInformation, homeInformation, experience, careAndActivityPlans }) => (
+      {({
+        pet,
+        personalInformation,
+        homeInformation,
+        experience,
+        careAndActivityPlans,
+      }) => (
         <Dialog onClose={onClose}>
           <div className="p-4">
             <h2 className="text-[42px] text-green-700 text-center p-2 font-bold">
@@ -50,9 +60,7 @@ const AplicationReviewPage = ({ id, onClose }) => {
               <TableData label="Name">
                 {personalInformation.firstName}
               </TableData>
-              <TableData label="Name">
-                {personalInformation.lastName}
-              </TableData>
+              <TableData label="Name">{personalInformation.lastName}</TableData>
               <TableData label="City">
                 {personalInformation.address.city}
               </TableData>
@@ -62,12 +70,8 @@ const AplicationReviewPage = ({ id, onClose }) => {
               <TableData label="Phone">
                 {personalInformation.phoneNumber}
               </TableData>
-              <TableData label="Email">
-                {personalInformation.email}
-              </TableData>
-              <TableData label="Home type">
-                {homeInformation.type}
-              </TableData>
+              <TableData label="Email">{personalInformation.email}</TableData>
+              <TableData label="Home type">{homeInformation.type}</TableData>
               <TableData label="Childrens">
                 {homeInformation.children}
               </TableData>
@@ -78,17 +82,23 @@ const AplicationReviewPage = ({ id, onClose }) => {
                 {experience.petDuration}
               </TableData>
               <TableData label="Activity plans">
-                {careAndActivityPlans.activityType.join(", ")}
+                {careAndActivityPlans.activityType.join(', ')}
               </TableData>
               <TableData label="Daily exercises plans">
-                {careAndActivityPlans.dailyExercise.join(", ")}
+                {careAndActivityPlans.dailyExercise.join(', ')}
               </TableData>
             </div>
             <div className="flex flex-row items-center justify-around w-full mt-4">
-              <Button variant="primary" onClick={() => handleReviewApplication()}>
+              <Button
+                variant="primary"
+                onClick={() => handleReviewApplication()}
+              >
                 Reject
               </Button>
-              <Button variant="primary" onClick={() => handleReviewApplication(true)}>
+              <Button
+                variant="primary"
+                onClick={() => handleReviewApplication(true)}
+              >
                 Accept
               </Button>
             </div>

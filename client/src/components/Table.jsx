@@ -16,7 +16,7 @@ Table.Header = ({ children, size = 1 }) => (
 
 Table.Row = ({ children, size = 5 }) => (
   <div className="sm:table-row-group">
-    <div className="sm:table-row">
+    <div className="sm:table-row border-y-2">
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, { size: size });
       })}

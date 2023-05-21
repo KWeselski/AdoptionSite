@@ -1,9 +1,12 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import styles from "../styles";
-import Button from "../components/Button";
-import { Link, useParams } from "react-router-dom";
-import Loader from "../components/Loader";
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+
+import axios from 'axios';
+
+import Button from '../components/Button';
+import Loader from '../components/Loader';
+import { useShelters } from '../hooks';
+import styles from '../styles';
 
 const TableData = ({ label, value }) => (
   <div key={label} className="flex w-full py-2 border-b text-start items-start">
@@ -15,18 +18,17 @@ const TableData = ({ label, value }) => (
 const AdoptionPage = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
-
+  const [shelter, setShelter] = useState(null);
+  const shelters = useShelters();
   useEffect(() => {
-    axios.get(`/api/animals/${id}`).then(({ data }) => setPet(data));
-  }, []);
+    const fetchPet = async () => {
+      const { data } = await axios.get(`/api/animals/${id}`);
+      setPet(data);
+      setShelter(shelters.find((shelter) => shelter._id === data.shelter));
+    };
 
-  const shelterData = {
-    name: "Schronisko dla bezdomnych zwierząt",
-    phoneNumber: "+48 123 456 789",
-    email: "kontakt@schronisko.pl",
-    street: "ul. Przykładowa 1",
-    city: "Warszawa",
-  };
+    fetchPet();
+  }, []);
 
   return (
     <div className={`${styles.flexStart}`}>
@@ -61,21 +63,22 @@ const AdoptionPage = () => {
                   </div>
                   <p className="mt-4">{pet.description}</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-lg w-full md:w-1/3">
-                  <h2 className="text-2xl font-bold mb-2">
-                    {shelterData.name}
-                  </h2>
-                  <span>
-                    <p>{shelterData.street}</p>
-                  </span>
-                  <p>
-                    <strong>Kontakt telefoniczny: </strong>
-                    {shelterData.phoneNumber}
-                  </p>
-                  <p>
-                    <strong>Email: </strong>
-                    {shelterData.email}
-                  </p>
+                <div className=" bg-white p-6 rounded-lg shadow-lg w-full md:w-1/3 flex flex-col items-center gap-2">
+                  {shelter && (
+                    <>
+                      <h2 className="text-2xl font-bold mb-2">
+                        {shelter.name}
+                      </h2>
+                      <p className="font-bold text-[18px]">
+                        {shelter.address.city}
+                      </p>
+                      <p>Phone number: {shelter.phoneNumber}</p>
+                      <p>
+                        <strong>Email: </strong>
+                        {shelter.email}
+                      </p>
+                    </>
+                  )}
                   <Link to={`/application/${pet._id}`}>
                     <Button variant="primary">Send Application</Button>
                   </Link>

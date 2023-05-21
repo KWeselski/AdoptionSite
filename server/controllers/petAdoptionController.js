@@ -1,4 +1,5 @@
 import cloudinary from "cloudinary";
+import { Shelter } from "../models/shelterModel.js";
 import { PetAdoption } from "../models/petAdoptionModel.js";
 import { AdoptionApplication } from "../models/adoptionApplicationModel.js";
 
@@ -7,10 +8,14 @@ const AVAILABLE = "Available";
 const createPetAdoption = async (req, res) => {
   const petAdoption = new PetAdoption(req.body);
   try {
-    console.log(petAdoption);
-    const result = await cloudinary.uploader.upload(req.file.path);
+    const result = await cloudinary.uploader.upload(req.body.image);
     petAdoption.image = result.url;
-    await petAdoption.save();
+    const shelter = await Shelter.findById(req.body.shelter);
+    const savedPet = await petAdoption.save();
+
+    shelter.animals.push(savedPet._id);
+    await shelter.save();
+  
     res.status(201).json({ message: "Pet for adoption created" });
   } catch (err) {
     console.log(err);
@@ -41,14 +46,28 @@ const getPet = async (req, res) => {
 };
 
 const getPets = async (req, res) => {
-  const { partial, limit } = req.query;
+  const allowedFilters = [
+    "name",
+    "city",
+    "species",
+    "gender",
+    "size",
+    "age",
+    "breed",
+  ];
+
+  let query = {};
+  for (let key in req.query) {
+    if (allowedFilters.includes(key) && req.query[key].trim() !== "") {
+      query[key] = req.query[key];
+    }
+  }
+
+  query.status = "Available";
   try {
-    const animals = partial
-      ? await PetAdoption.find(
-          { status: AVAILABLE },
-          "name size image city age"
-        ).limit(parseInt(limit))
-      : await PetAdoption.find({ status: AVAILABLE });
+    const animals = await PetAdoption.find(query).select(
+      "name city age size image"
+    );
     res.status(200).json(animals);
   } catch (error) {
     res.status(500).json({ message: error.message });

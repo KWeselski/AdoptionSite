@@ -1,17 +1,25 @@
-import { edit, trash } from "../../assets";
-import { Action, Button, Filter, Loader, Pagination, Table } from "../../components";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchPets, deletePet } from "../../redux/actions/pets.js";
-import { useState, useEffect } from "react";
-import { useCallback } from "react";
+import { useState, useEffect } from 'react';
+import { useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { edit, trash } from '../../assets';
+import {
+  Action,
+  Button,
+  Filter,
+  Loader,
+  Pagination,
+  Table,
+} from '../../components';
+import { fetchPets, deletePet } from '../../redux/actions/pets.js';
 
 const AnimalsPage = ({ handleTab }) => {
   const dispatch = useDispatch();
   const pets = useSelector((state) => state.pets);
   const [filters, setFilters] = useState({
-    name: "",
-    breed: "",
-    status: "Available",
+    name: '',
+    breed: '',
+    status: 'Available',
   });
 
   const handleChange = (event) => {
@@ -21,19 +29,25 @@ const AnimalsPage = ({ handleTab }) => {
     });
   };
   const filteredPets = pets.filter((pet) => {
-    return pet.name.toLowerCase().includes(filters.name.toLowerCase()) && pet.breed.toLowerCase().includes(filters.breed.toLowerCase()) && pet.status === filters.status;
+    return (
+      pet.name.toLowerCase().includes(filters.name.toLowerCase()) &&
+      pet.breed.toLowerCase().includes(filters.breed.toLowerCase()) &&
+      pet.status === filters.status
+    );
   });
 
   const onEdit = (id) => {};
 
-  const onDelete = useCallback(async (id) => {
-    try {
-      dispatch(deletePet(id));
-    }
-    catch (error) {
-      console.error(error);
-    }
-  }, [dispatch]);
+  const onDelete = useCallback(
+    async (id) => {
+      try {
+        dispatch(deletePet(id));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
     dispatch(fetchPets());
@@ -46,11 +60,24 @@ const AnimalsPage = ({ handleTab }) => {
           <>
             <div className="flex flex-col sm:flex-row justify-between items-center p-4">
               <Filter.Header>
-                <Filter.Input name="name" value={filters.name} onChange={handleChange} />
-                <Filter.Input name="breed" value={filters.breed} onChange={handleChange} />
-                <Filter.Select name="status" value={filters.status} onChange={handleChange} options={['Adopted', 'Available']} />
+                <Filter.Input
+                  name="name"
+                  value={filters.name}
+                  onChange={handleChange}
+                />
+                <Filter.Input
+                  name="breed"
+                  value={filters.breed}
+                  onChange={handleChange}
+                />
+                <Filter.Select
+                  name="status"
+                  value={filters.status}
+                  onChange={handleChange}
+                  options={['Adopted', 'Available']}
+                />
               </Filter.Header>
-              <Button variant="primary" onClick={() => handleTab("addAnimal")}>
+              <Button variant="primary" onClick={() => handleTab('addAnimal')}>
                 Add animal
               </Button>
             </div>

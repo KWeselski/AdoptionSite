@@ -1,47 +1,81 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import { Input, Button, ErrorText, Select, Field, Checkbox } from "../components";
-import axios from "axios";
-import styles from "../styles";
-import { useParams } from "react-router-dom";
+import { useParams } from 'react-router-dom';
+
+import axios from 'axios';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import {
+  Input,
+  Button,
+  ErrorText,
+  Select,
+  Field,
+  Checkbox,
+} from '../components';
+import styles from '../styles';
 
 const options = {
-  previousPets: ["No", "Yes"],
-  children: ["No", "Yes"],
-  homeType: ["House", "Apartment"],
-  petDuration: ['Less than 2 hours', '2-4 hours', '4-6 hours', '6-8 hours', 'More than 8 hours'],
-  dailyExercise: ['Short walks', 'Medium-length walks', 'Long walks or runs', 'Home exercises and games', 'Joint exercises'],
-  activityType: ['Outdoor activities', 'Training', 'Home games', 'Spending time with other dogs', 'Relaxation']
+  previousPets: ['No', 'Yes'],
+  children: ['No', 'Yes'],
+  homeType: ['House', 'Apartment'],
+  petDuration: [
+    '< 1 year',
+    '1-3 years',
+    '4-6 years',
+    '6-8 years',
+    ' More than 8 years',
+  ],
+  dailyExercise: [
+    'Short walks',
+    'Medium-length walks',
+    'Long walks or runs',
+    'Home exercises and games',
+    'Joint exercises',
+  ],
+  activityType: [
+    'Outdoor activities',
+    'Training',
+    'Home games',
+    'Spending time with other dogs',
+    'Relaxation',
+  ],
 };
 
 const validationSchema = Yup.object({
   personalInformation: Yup.object().shape({
-    firstName: Yup.string().required("Add first name"),
-    lastName: Yup.string().required("Add last name"),  
-    phoneNumber: Yup.string().required("Add phone number").matches(/^\d{9,15}$/, "Incorrect phone number."),
-    email: Yup.string().matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, "Incorrect format").required("Add email"),
+    firstName: Yup.string().required('Add first name'),
+    lastName: Yup.string().required('Add last name'),
+    phoneNumber: Yup.string()
+      .required('Add phone number')
+      .matches(/^\d{9,15}$/, 'Incorrect phone number.'),
+    email: Yup.string()
+      .matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, 'Incorrect format')
+      .required('Add email'),
     address: Yup.object().shape({
-      city: Yup.string().required("Add city"),
-      street: Yup.string().required("Add street"),
+      city: Yup.string().required('Add city'),
+      street: Yup.string().required('Add street'),
     }),
   }),
   homeInformation: Yup.object().shape({
-    type: Yup.string().required("Select home type"),
-    children: Yup.string().required("Select children"),
+    type: Yup.string().required('Select home type'),
+    children: Yup.string().required('Select children'),
   }),
   experience: Yup.object().shape({
-    previousPets: Yup.string().required("Select previous pets"),
-    petDuration: Yup.string().required("Select pet duration"),
+    previousPets: Yup.string().required('Select previous pets'),
+    petDuration: Yup.string().required('Select pet duration'),
   }),
   careAndActivityPlans: Yup.object().shape({
-  dailyExercise: Yup.array().min(1, 'Select at least one option'),
-  activityType: Yup.array().min(1, 'Select at least one option')
- })
+    dailyExercise: Yup.array().min(1, 'Select at least one option'),
+    activityType: Yup.array().min(1, 'Select at least one option'),
+  }),
 });
 
 const createApplication = async (applicationData, petId) => {
   try {
-    await axios.post("/api/applications/add", {pet: petId, ...applicationData});
+    await axios.post('/api/applications/add', {
+      pet: petId,
+      ...applicationData,
+    });
   } catch (error) {
     console.error(error);
   }
@@ -53,27 +87,27 @@ const ApplicationForm = () => {
   const formik = useFormik({
     initialValues: {
       personalInformation: {
-        firstName: "",
-        lastName: "",
-        phoneNumber: "",
-        email: "",
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        email: '',
         address: {
-          city: "",
-          street: ""
-        }
+          city: '',
+          street: '',
+        },
       },
       homeInformation: {
-        type: "House",
-        children: "No",
+        type: 'House',
+        children: 'No',
       },
       experience: {
-      previousPets: "No",
-      petDuration: "Less than 2 hours",
+        previousPets: 'No',
+        petDuration: 'Less than 2 hours',
       },
       careAndActivityPlans: {
-      dailyExercise: [],
-      activityType: [],
-      }
+        dailyExercise: [],
+        activityType: [],
+      },
     },
     validationSchema: validationSchema,
     validateOnBlur: false,
@@ -98,7 +132,9 @@ const ApplicationForm = () => {
               value={formik.values.personalInformation.firstName}
             />
             {formik.errors.personalInformation?.firstName ? (
-              <ErrorText>{formik.errors.personalInformation.firstName}</ErrorText>
+              <ErrorText>
+                {formik.errors.personalInformation.firstName}
+              </ErrorText>
             ) : null}
           </Field>
           <Field>
@@ -109,7 +145,9 @@ const ApplicationForm = () => {
               value={formik.values.personalInformation.lastName}
             />
             {formik.errors.personalInformation?.lastName ? (
-              <ErrorText>{formik.errors.personalInformation.lastName}</ErrorText>
+              <ErrorText>
+                {formik.errors.personalInformation.lastName}
+              </ErrorText>
             ) : null}
           </Field>
           <Field>
@@ -121,7 +159,9 @@ const ApplicationForm = () => {
               value={formik.values.personalInformation.phoneNumber}
             />
             {formik.errors.personalInformation?.phoneNumber ? (
-              <ErrorText>{formik.errors.personalInformation.phoneNumber}</ErrorText>
+              <ErrorText>
+                {formik.errors.personalInformation.phoneNumber}
+              </ErrorText>
             ) : null}
           </Field>
           <Field>
@@ -144,7 +184,9 @@ const ApplicationForm = () => {
               value={formik.values.personalInformation.address.city}
             />
             {formik.errors.personalInformation?.address?.city ? (
-              <ErrorText>{formik.errors.personalInformation.address.city}</ErrorText>
+              <ErrorText>
+                {formik.errors.personalInformation.address.city}
+              </ErrorText>
             ) : null}
           </Field>
           <Field>
@@ -155,7 +197,9 @@ const ApplicationForm = () => {
               value={formik.values.personalInformation.address.street}
             />
             {formik.errors.personalInformation?.address?.street ? (
-              <ErrorText>{formik.errors.personalInformation.address.street}</ErrorText>
+              <ErrorText>
+                {formik.errors.personalInformation.address.street}
+              </ErrorText>
             ) : null}
           </Field>
           <Field>
@@ -171,8 +215,8 @@ const ApplicationForm = () => {
             ) : null}
           </Field>
           <Field>
-            <Select 
-             label="Do you have children?"
+            <Select
+              label="Do you have children?"
               name="homeInformation.children"
               onChange={formik.handleChange}
               value={formik.values.homeInformation.children}
@@ -184,58 +228,64 @@ const ApplicationForm = () => {
           </Field>
         </div>
         <div className="w-full md:w-1/2">
-        <Field>
+          <Field>
             <Select
-            label="Did you have a pet before?"
+              label="Did you have a pet before?"
               name="experience.previousPets"
               onChange={formik.handleChange}
               value={formik.values.experience.previousPets}
               options={options.previousPets}
-              />
+            />
             {formik.errors.experience?.previousPets ? (
               <ErrorText>{formik.errors.experience.previousPets}</ErrorText>
             ) : null}
           </Field>
           <Field>
             <Select
-            label="How long did you have a pet?"
-            name="experience.petDuration"
-            onChange={formik.handleChange}
-            value={formik.values.experience.petDuration}
-            options={options.petDuration}
+              label="How long did you have a pet?"
+              name="experience.petDuration"
+              onChange={formik.handleChange}
+              value={formik.values.experience.petDuration}
+              options={options.petDuration}
             />
             {formik.errors.experience?.petDuration ? (
               <ErrorText>{formik.errors.experience.petDuration}</ErrorText>
             ) : null}
-          </Field>  
+          </Field>
           <Field>
             <Checkbox
-            name="careAndActivityPlans.activityType"
-            label="What kind of activities would you like to do with your dog?" 
-            options={options.activityType}
-            values={formik.values.careAndActivityPlans.activityType}
-            handleChange={formik.handleChange}
+              name="careAndActivityPlans.activityType"
+              label="What kind of activities would you like to do with your dog?"
+              options={options.activityType}
+              values={formik.values.careAndActivityPlans.activityType}
+              handleChange={formik.handleChange}
             />
             {formik.errors.careAndActivityPlans?.activityType ? (
-            <ErrorText>{formik.errors.careAndActivityPlans.activityType}</ErrorText>
-             ) : null}
-            </Field>
+              <ErrorText>
+                {formik.errors.careAndActivityPlans.activityType}
+              </ErrorText>
+            ) : null}
+          </Field>
           <Field>
-            <Checkbox 
-            name="careAndActivityPlans.dailyExercise" 
-            label="How much time can you spend with your dog?"
-            options={options.dailyExercise}
-            values={formik.values.careAndActivityPlans.dailyExercise}
-            handleChange={formik.handleChange}
+            <Checkbox
+              name="careAndActivityPlans.dailyExercise"
+              label="How much time can you spend with your dog?"
+              options={options.dailyExercise}
+              values={formik.values.careAndActivityPlans.dailyExercise}
+              handleChange={formik.handleChange}
             />
-          {formik.errors.careAndActivityPlans?.dailyExercise ? (
-              <ErrorText>{formik.errors.careAndActivityPlans.dailyExercise}</ErrorText>
-          ) : null}
+            {formik.errors.careAndActivityPlans?.dailyExercise ? (
+              <ErrorText>
+                {formik.errors.careAndActivityPlans.dailyExercise}
+              </ErrorText>
+            ) : null}
           </Field>
         </div>
       </div>
       <Field className={styles.flexCenter}>
-        <Button variant="primary" type="submit">Send application</Button>
+        <Button variant="primary" type="submit">
+          Send application
+        </Button>
       </Field>
     </form>
   );

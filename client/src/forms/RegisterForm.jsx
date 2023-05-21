@@ -1,29 +1,28 @@
-import axios from "axios";
-import { useFormik } from "formik";
-import Button from "../components/Button";
-import Input from "../components/Input";
-import * as Yup from "yup";
-import ErrorText from "../components/ErrorText";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import Button from '../components/Button';
+import ErrorText from '../components/ErrorText';
+import Input from '../components/Input';
 
 const RegisterForm = () => {
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required("Please enter username"),
+    name: Yup.string().required('Please enter username'),
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Please enter email"),
+      .email('Invalid email address')
+      .required('Please enter email'),
     password: Yup.string()
-      .min(8, "Password must be at least 8 characters long")
-      .required("Please enter password"),
+      .min(8, 'Password must be at least 8 characters long')
+      .required('Please enter password'),
   });
 
-  const onSubmit = async ({ name, email, password }) => {
-  };
+  const onSubmit = async ({ name, email, password }) => {};
 
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
     },
     validateOnChange: false,
     validationSchema,

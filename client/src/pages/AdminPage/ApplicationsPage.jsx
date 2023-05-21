@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
-import AplicationReviewPage from "./AplicationReviewPage";
-import { Button, Pagination, Table, Loader } from "../../components";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchApplications } from "../../redux/actions/applications.js";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
+import { Button, Pagination, Table, Loader } from '../../components';
+import { fetchApplications } from '../../redux/actions/applications.js';
+import AplicationReviewPage from './AplicationReviewPage';
 
 const ApplicationsPage = () => {
   const [open, setOpen] = useState(false);
@@ -10,12 +11,10 @@ const ApplicationsPage = () => {
   const dispatch = useDispatch();
   const applications = useSelector((state) => state.applications);
 
-  const onEdit = (id) => {};
-  const onDelete = (id) => {};
-
   useEffect(() => {
     dispatch(fetchApplications());
   }, [dispatch]);
+
   const handleCheck = (id) => {
     return () => {
       setOpen(true);

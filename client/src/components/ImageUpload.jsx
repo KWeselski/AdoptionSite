@@ -1,11 +1,28 @@
 import React, { useState } from 'react';
+import Resizer from "react-image-file-resizer";
 
 const ImageUpload = ({ onFileSelect }) => {
   const [previewUrl, setPreviewUrl] = useState('');
+  const resizeFile = (file) =>
+      new Promise((resolve) => {
+    Resizer.imageFileResizer(
+      file,
+      720,
+      720,
+      "JPEG",
+      80,
+      0,
+      (uri) => {
+        resolve(uri);
+      },
+      "base64"
+    );
+  });
 
-  const fileSelectHandler = (e) => {
+  const fileSelectHandler = async (e) => {
     setPreviewUrl(URL.createObjectURL(e.target.files[0]));
-    onFileSelect(e.target.files[0]);
+    const image = await resizeFile(e.target.files[0]);
+    onFileSelect(image);
   };
 
   return (

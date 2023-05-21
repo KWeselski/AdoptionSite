@@ -1,9 +1,10 @@
-import styles from "../styles";
-import { partners, statistics } from "../constants";
-import PetsList from "../components/PetsList";
-import SectionHero from "../components/SectionHero";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
+
+import {PetsList, SectionHero} from '../components';
+import { partners, statistics } from '../constants';
+import styles from '../styles';
 
 const Home = () => {
   const [data, setData] = useState({
@@ -12,17 +13,16 @@ const Home = () => {
       dogsCount: 0,
       catsCount: 0,
       adoptedCount: 0,
-    }
-  })
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get("/api/");
+      const result = await axios.get('/api/');
       setData(result.data);
     };
     fetchData();
   }, []);
-
 
   return (
     <>

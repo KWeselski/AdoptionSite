@@ -1,4 +1,5 @@
 import { Shelter } from "../models/shelterModel.js";
+import { PetAdoption } from "../models/petAdoptionModel.js";
 
 const createShelter = async (req, res) => {
   try {
@@ -33,14 +34,30 @@ const getShelters = async (req, res) => {
   }
 };
 
+const updateShelter = async (req, res) => {
+  const { id } = req.params;
+  try {
+    await Shelter.findOneAndUpdate({ _id: id }, req.body , { new: true });
+    res.status(200).json({ message: "Shelter has been updated" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 const deleteShelter = async (req, res) => {
   const { id } = req.params;
   try {
+    const shelter = await Shelter.findById(id);
+    for (let id of shelter.animals) {
+      await PetAdoption.findByIdAndDelete(id);
+    }
     await Shelter.findByIdAndDelete(id);
+
     res.status(200).json({ message: "Shelter has been deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
-export { createShelter, getShelter, getShelters, deleteShelter };
+export { createShelter, getShelter, getShelters, deleteShelter, updateShelter };

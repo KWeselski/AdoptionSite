@@ -1,22 +1,22 @@
-import { useFormik } from "formik";
-import * as Yup from "yup";
-import {Button , Input, ErrorText, Field} from "../components";
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { Button, Input, ErrorText, Field } from '../components';
 
 const LoginForm = () => {
   const validationSchema = Yup.object().shape({
     email: Yup.string()
-      .email("Invalid email address")
-      .required("Please enter email"),
-    password: Yup.string().required("Please enter password"),
+      .email('Invalid email address')
+      .required('Please enter email'),
+    password: Yup.string().required('Please enter password'),
   });
 
-  const onSubmit = async ({ email, password }) => {}
-
+  const onSubmit = async ({ email, password }) => {};
 
   const formik = useFormik({
     initialValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
     validateOnChange: false,
     validationSchema,

@@ -4,18 +4,30 @@ const ShelterSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      maxLength: 70,
       required: true,
     },
     phoneNumber: {
       type: String,
-      required: false,
+      validate: {
+        validator: function (v) {
+          return /^\d{10,15}$/.test(v);
+        },
+      },
+      required: true,
     },
     address: {
-      city: { type: String, required: true },
-      street: { type: String, required: true },
+      city: { type: String, maxlength: 70, required: true },
+      street: { type: String, maxlength: 70, required: true },
     },
     email: {
       type: String,
+      maxlength: 70,
+      validate: {
+        validator: function (v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        },
+      },
       required: true,
     },
     animals: [

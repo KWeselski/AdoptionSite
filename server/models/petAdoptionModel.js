@@ -5,6 +5,12 @@ const petAdoptionSchema = new Schema(
   {
     name: {
       type: String,
+      maxLength: 50,
+      validate: {
+        validator: function (v) {
+          return !/\s/.test(v);
+        },
+      },
       required: true,
     },
     species: {
@@ -19,15 +25,19 @@ const petAdoptionSchema = new Schema(
     },
     age: {
       type: Number,
+      min: 0,
+      max: 20,
       required: true,
     },
     breed: {
       type: String,
+      maxLength: 70,
       required: false,
-      default: "Mieszaniec",
+      default: "Mixed",
     },
     city: {
       type: String,
+      maxLength: 70,
       required: true,
     },
     size: {
@@ -37,6 +47,7 @@ const petAdoptionSchema = new Schema(
     },
     description: {
       type: String,
+      maxLength: 500,
       required: true,
     },
     image: String,
