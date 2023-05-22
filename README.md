@@ -1,6 +1,6 @@
 # PawSome - aplikacja do adoptowania zwierząt
 
-[](preview.png)
+![](preview.png)
 
 # Funkcje:
 
