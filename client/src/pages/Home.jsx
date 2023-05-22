@@ -39,8 +39,8 @@ const Home = () => {
         title="Find your new best friend"
         description="Search for dogs and cats who need a home."
       />
-      <section className="flex md:flex-row flex-col p-4 ">
-          <PetsList pets={data.pets} maxCol={4}/>
+      <section className="flex md:flex-row flex-col p-4">
+        <PetsList pets={data.pets} maxCol={4} />
       </section>
       <SectionHero
         title="Statistics"

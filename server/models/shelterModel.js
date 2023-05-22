@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const ShelterSchema = new mongoose.Schema(
   {
@@ -11,7 +11,7 @@ const ShelterSchema = new mongoose.Schema(
       type: String,
       validate: {
         validator: function (v) {
-          return /^\d{10,15}$/.test(v);
+          return /^\d{9,15}$/.test(v);
         },
       },
       required: true,
@@ -33,7 +33,7 @@ const ShelterSchema = new mongoose.Schema(
     animals: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "PetAdoption",
+        ref: 'PetAdoption',
       },
     ],
   },
@@ -42,4 +42,4 @@ const ShelterSchema = new mongoose.Schema(
   }
 );
 
-export const Shelter = mongoose.model("Shelter", ShelterSchema);
+export const Shelter = mongoose.model('Shelter', ShelterSchema);

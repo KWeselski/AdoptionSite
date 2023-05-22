@@ -18,7 +18,7 @@ const adoptionApplicationSchema = new Schema(
         type: String,
         validate: {
           validator: function (v) {
-            return /^\d{10,15}$/.test(v);
+            return /^\d{9,15}$/.test(v);
           },
         },
         required: true,
