@@ -1,16 +1,19 @@
-import React from "react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { logo, close, menu } from "../assets";
-import { navLinks } from "../constants";
+import React from 'react';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import Button from "./Button";
+import { logo, close, menu } from '../assets';
+import { navLinks } from '../constants';
+import { styles } from '../styles';
+import Button from './Button';
 
 const Navbar = () => {
   const [toogle, setToogle] = useState(false);
+  const token = useSelector((state) => state.auth.token);
 
   return (
-    <div className="w-full flex py-6 justify-between items-center">
+    <div className={`${styles.flexBetween} w-full py-6`}>
       <Link to="/">
         <img src={logo} alt="pawsAdoption" className="w-[64px] h-[64px]" />
       </Link>
@@ -23,11 +26,13 @@ const Navbar = () => {
             <a href={link.url}>{link.title}</a>
           </li>
         ))}
-        <Link to="/profile">
-          <Button variant="primary">Profile</Button>
-        </Link>
+        {token ? (
+          <Link to="/profile">
+            <Button variant="primary">Profile</Button>
+          </Link>
+        ) : null}
         <Link to="/login">
-          <Button variant="primary">Sign Up</Button>
+          <Button variant="primary">{token ? 'Logout' : 'Sign Up'}</Button>
         </Link>
       </ul>
       <div className="sm:hidden flex flex-1 justify-end items-center">

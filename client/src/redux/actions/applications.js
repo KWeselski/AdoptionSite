@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+import { SET_APPLICATIONS, DELETE_APPLICATION } from '../constants';
+
 export const setApplications = (pets) => ({
-  type: 'SET_APPLICATIONS',
+  type: SET_APPLICATIONS,
   payload: pets,
 });
 
 export const deleteApplication = (id) => ({
-  type: 'DELETE_APPLICATION',
+  type: DELETE_APPLICATION,
   payload: id,
 });
 

@@ -1,18 +1,14 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-const AnimalCard = ({
-  _id,
-  image,
-  name,
-  city,
-  age,
-  size,
-}) => {
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+
+import { styles } from '../styles';
+
+const AnimalCard = ({ _id, image, name, city, age, size }) => {
   const [hover, setHover] = useState(false);
 
   return (
     <div
-      className="max-w-sm mx-auto bg-white shadow-md  rounded-tl-lg rounded-tr-lg flex flex-col justify-between items-center hover:shadow-lg w-[240px] transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer"
+      className={`${styles.flexBetween} flex-col max-w-sm mx-auto bg-white shadow-md rounded-tl-lg rounded-tr-lg hover:shadow-lg w-[240px] transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer`}
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
     >
@@ -26,7 +22,9 @@ const AnimalCard = ({
           <span className="text-xs">{city}</span>
         </div>
         {hover && (
-          <div className="flex flex-col justify-center absolute bottom-0 opacity-80 bg-white text-black py-1 px-2 h-full w-full">
+          <div
+            className={`${styles.flexCenter} flex-col absolute bottom-0 opacity-80 bg-white text-black py-1 px-2 h-full w-full`}
+          >
             <span className="text-xl">
               <span className="font-bold">Name:</span> {name}
             </span>
@@ -43,7 +41,7 @@ const AnimalCard = ({
         <Link to={`/animals/${_id}`}>
           <p
             className={`text-xl font-medium ${
-              hover ? "text-green-400" : "text-black"
+              hover ? 'text-green-400' : 'text-black'
             }`}
           >
             {name}

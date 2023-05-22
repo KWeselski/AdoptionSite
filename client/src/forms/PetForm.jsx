@@ -16,8 +16,10 @@ import {
   Pagination,
   ImageUpload,
   Loader,
+  Form,
 } from '../components';
 import { useShelters } from '../hooks';
+import { styles } from '../styles';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Add animal name'),
@@ -38,12 +40,14 @@ const ShelterDialog = ({ isOpen, selectShelter, onClose }) => {
   if (!isOpen) return null;
 
   const shelters = useShelters();
-
+  console.log(shelters);
   return (
     <Loader data={shelters}>
       {(shelters) => (
         <Dialog title="Select shelter" onClose={onClose}>
-          <div className="flex w-full flex-col sm:flex-row justify-between items-center p-4">
+          <div
+            className={`${styles.flexCenter} w-full flex-col sm:flex-row p-4`}
+          >
             <Pagination values={shelters} perPage={4}>
               {(currentData) => (
                 <Table>
@@ -98,8 +102,6 @@ const PetForm = () => {
     onSubmit: async (values, { resetForm }) => {
       try {
         await axios.post('api/animals/add', { ...values, image });
-        setSelectShelter(null);
-        setImage(null);
         resetForm();
       } catch (error) {
         console.error(error);
@@ -118,12 +120,9 @@ const PetForm = () => {
   };
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full xl:w-1/2 justify-center flex flex-col"
-    >
-      <div className="flex flex-col md:flex-row  gap-4 ">
-        <div className="w-full md:w-1/2">
+    <Form onSubmit={formik.handleSubmit}>
+      <Form.Row>
+        <Form.Column>
           <Field>
             <Input
               label="Name"
@@ -172,8 +171,8 @@ const PetForm = () => {
           <Field className={'mt-10'}>
             <ImageUpload onFileSelect={handleImageUpload} />
           </Field>
-        </div>
-        <div className="w-full md:w-1/2">
+        </Form.Column>
+        <Form.Column>
           <Field>
             <Input
               label="Age"
@@ -223,9 +222,8 @@ const PetForm = () => {
               Select Shelter
             </Button>
           </Field>
-        </div>
-      </div>
-
+        </Form.Column>
+      </Form.Row>
       <Field>
         <TextArea
           label="Description"
@@ -239,10 +237,10 @@ const PetForm = () => {
         selectShelter={handleSelectShelter}
         onClose={() => setIsOpen(false)}
       />
-      <Field>
+      <Field className={styles.flexCenter}>
         <Button variant="primary">Add Animal</Button>
       </Field>
-    </form>
+    </Form>
   );
 };
 

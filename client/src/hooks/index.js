@@ -8,10 +8,8 @@ export const useShelters = () => {
   const shelters = useSelector((state) => state.shelters);
 
   useEffect(() => {
-    if (shelters.length === 0) {
-      dispatch(fetchShelters());
-    }
-  }, [dispatch, shelters.length]);
+    dispatch(fetchShelters());
+  }, [dispatch]);
 
   return shelters;
 };

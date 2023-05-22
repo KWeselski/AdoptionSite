@@ -11,6 +11,7 @@ import {
   Select,
   Field,
   Checkbox,
+  Form,
 } from '../components';
 import styles from '../styles';
 
@@ -23,7 +24,7 @@ const options = {
     '1-3 years',
     '4-6 years',
     '6-8 years',
-    ' More than 8 years',
+    'More than 8 years',
   ],
   dailyExercise: [
     'Short walks',
@@ -48,9 +49,7 @@ const validationSchema = Yup.object({
     phoneNumber: Yup.string()
       .required('Add phone number')
       .matches(/^\d{9,15}$/, 'Incorrect phone number.'),
-    email: Yup.string()
-      .matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, 'Incorrect format')
-      .required('Add email'),
+    email: Yup.string().email('Invalid email address').required('Add email'),
     address: Yup.object().shape({
       city: Yup.string().required('Add city'),
       street: Yup.string().required('Add street'),
@@ -112,18 +111,13 @@ const ApplicationForm = () => {
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => {
-      createApplication(values, id);
-    },
+    onSubmit: (values) => createApplication(values, id),
   });
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full justify-center flex flex-col"
-    >
-      <div className="flex flex-col md:flex-row  gap-4 ">
-        <div className="w-full md:w-1/2">
+    <Form onSubmit={formik.handleSubmit} fullWidth>
+      <Form.Row>
+        <Form.Column>
           <Field>
             <Input
               label="First Name"
@@ -226,8 +220,8 @@ const ApplicationForm = () => {
               <ErrorText>{formik.errors.homeInformation.children}</ErrorText>
             ) : null}
           </Field>
-        </div>
-        <div className="w-full md:w-1/2">
+        </Form.Column>
+        <Form.Column>
           <Field>
             <Select
               label="Did you have a pet before?"
@@ -253,7 +247,7 @@ const ApplicationForm = () => {
             ) : null}
           </Field>
           <Field>
-            <Checkbox
+            <Checkbox.Multi
               name="careAndActivityPlans.activityType"
               label="What kind of activities would you like to do with your dog?"
               options={options.activityType}
@@ -267,7 +261,7 @@ const ApplicationForm = () => {
             ) : null}
           </Field>
           <Field>
-            <Checkbox
+            <Checkbox.Multi
               name="careAndActivityPlans.dailyExercise"
               label="How much time can you spend with your dog?"
               options={options.dailyExercise}
@@ -280,14 +274,14 @@ const ApplicationForm = () => {
               </ErrorText>
             ) : null}
           </Field>
-        </div>
-      </div>
+        </Form.Column>
+      </Form.Row>
       <Field className={styles.flexCenter}>
         <Button variant="primary" type="submit">
           Send application
         </Button>
       </Field>
-    </form>
+    </Form>
   );
 };
 

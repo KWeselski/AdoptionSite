@@ -4,16 +4,15 @@ import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { Input, Button, ErrorText, Field } from '../components';
+import { Input, Button, ErrorText, Field, Form } from '../components';
+import { styles } from '../styles';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Add shelter name'),
   phoneNumber: Yup.string()
     .required('Add phone number')
     .matches(/^\d{9,15}$/, 'Incorrect phone number.'),
-  email: Yup.string()
-    .matches(/^[^@\s]+@[^@\s]+\.[^@\s]+$/, 'Incorrect format')
-    .required('Add email'),
+  email: Yup.string().email('Invalid email address').required('Add email'),
   address: Yup.object().shape({
     city: Yup.string().required('Add city'),
     street: Yup.string().required('Add street'),
@@ -59,12 +58,9 @@ const shelterForm = ({ isEdit, id }) => {
   }, [id, isEdit]);
 
   return (
-    <form
-      onSubmit={formik.handleSubmit}
-      className="w-full xl:w-1/2 justify-center flex flex-col"
-    >
-      <div className="flex flex-col md:flex-row  gap-4 ">
-        <div className="w-full md:w-1/2">
+    <Form onSubmit={formik.handleSubmit}>
+      <Form.Row>
+        <Form.Column>
           <Field>
             <Input
               label="Name"
@@ -99,8 +95,8 @@ const shelterForm = ({ isEdit, id }) => {
               <ErrorText>{formik.errors.address.city}</ErrorText>
             ) : null}
           </Field>
-        </div>
-        <div className="w-full md:w-1/2">
+        </Form.Column>
+        <Form.Column>
           <Field>
             <Input
               label="Email"
@@ -123,14 +119,14 @@ const shelterForm = ({ isEdit, id }) => {
               <ErrorText>{formik.errors.address.street}</ErrorText>
             ) : null}
           </Field>
-        </div>
-      </div>
-      <Field>
+        </Form.Column>
+      </Form.Row>
+      <Field className={styles.flexCenter}>
         <Button variant="primary">
           {isEdit ? 'Edit Shelter' : 'Add Shelter'}
         </Button>
       </Field>
-    </form>
+    </Form>
   );
 };
 

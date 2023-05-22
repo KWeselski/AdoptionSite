@@ -1,6 +1,6 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo } from 'react';
 
-const DOTS = "...";
+const DOTS = '...';
 
 const generatePageNumbers = (currentPage, perPage, totalPages) => {
   if (totalPages <= perPage)
@@ -47,7 +47,7 @@ const Pagination = ({ values, perPage, children }) => {
 
   return (
     <div className="flex w-full flex-col">
-      {typeof children === "function" ? children(currentData) : children}
+      {typeof children === 'function' ? children(currentData) : children}
       <div className="flex justify-center mt-4">
         {pageNumbers.map((page, index) =>
           page === DOTS ? (
@@ -58,7 +58,7 @@ const Pagination = ({ values, perPage, children }) => {
             <button
               key={page}
               className={`mx-1 px-3 py-1 rounded ${
-                currentPage === page ? "bg-green-500 text-white" : "bg-gray-200"
+                currentPage === page ? 'bg-green-500 text-white' : 'bg-gray-200'
               }`}
               onClick={() => handlePageChange(page)}
             >

@@ -1,6 +1,8 @@
 import React from 'react';
 
+import { Paper } from '../../components';
 import { ShelterForm, PetForm } from '../../forms';
+import {styles} from "../../styles"
 
 const components = {
   addShelter: <ShelterForm />,
@@ -9,11 +11,13 @@ const components = {
 };
 
 const AdminForms = ({ type, id }) => (
-  <div className="bg-white p-6 rounded-lg shadow">
-    <div className="flex flex-col md:flex-row justify-center items-center p-4">
+  <Paper>
+    <div
+      className={`${styles.flexCenter} md:flex-row justify-center items-center p-4`}
+    >
       {React.cloneElement(components[type], { id: id })}
     </div>
-  </div>
+  </Paper>
 );
 
 export default AdminForms;

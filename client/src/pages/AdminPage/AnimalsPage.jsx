@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { edit, trash } from '../../assets';
+import  {trash } from '../../assets';
 import {
   Action,
   Button,
   Filter,
   Loader,
   Pagination,
+  Paper,
   Table,
 } from '../../components';
 import { fetchPets, deletePet } from '../../redux/actions/pets.js';
@@ -36,15 +37,9 @@ const AnimalsPage = ({ handleTab }) => {
     );
   });
 
-  const onEdit = (id) => {};
-
   const onDelete = useCallback(
     async (id) => {
-      try {
         dispatch(deletePet(id));
-      } catch (error) {
-        console.error(error);
-      }
     },
     [dispatch]
   );
@@ -54,11 +49,11 @@ const AnimalsPage = ({ handleTab }) => {
   }, [dispatch]);
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <Paper>
       <Loader data={filteredPets}>
         {(animals) => (
           <>
-            <div className="flex flex-col sm:flex-row justify-between items-center p-4">
+            <Filter.Row>
               <Filter.Header>
                 <Filter.Input
                   name="name"
@@ -80,11 +75,11 @@ const AnimalsPage = ({ handleTab }) => {
               <Button variant="primary" onClick={() => handleTab('addAnimal')}>
                 Add animal
               </Button>
-            </div>
+            </Filter.Row>
             <Pagination values={animals} perPage={8}>
-              {(currentData) => (
+              {(currentData, key) => (
                 <Table>
-                  <Table.Row size={4}>
+                  <Table.Row size={4} key={key}>
                     <Table.Header>Name</Table.Header>
                     <Table.Header>Breed</Table.Header>
                     <Table.Header>Status</Table.Header>
@@ -96,8 +91,7 @@ const AnimalsPage = ({ handleTab }) => {
                       <Table.Cell>{breed}</Table.Cell>
                       <Table.Cell>{status}</Table.Cell>
                       <Table.Actions>
-                        <Action onClick={() => onEdit(_id)} icon={edit} />
-                        <Action onClick={() => onDelete(_id)} icon={trash} />
+                        <Action variant="primary" icon={trash} onClick={() => onDelete(_id)}/>
                       </Table.Actions>
                     </Table.Row>
                   ))}
@@ -107,7 +101,7 @@ const AnimalsPage = ({ handleTab }) => {
           </>
         )}
       </Loader>
-    </div>
+    </Paper>
   );
 };
 

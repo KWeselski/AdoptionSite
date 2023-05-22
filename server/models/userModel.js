@@ -1,12 +1,7 @@
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
+import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 
 const userSchema = new mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true,
-  },
   email: {
     type: String,
     required: true,
@@ -16,15 +11,15 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  isSuperUser: {
+    type: Boolean,
+    default: false,
   },
 });
 
-userSchema.pre("save", async function (next) {
+userSchema.pre('save', async function (next) {
   const user = this;
-  if (user.isModified("password") || user.isNew) {
+  if (user.isModified('password') || user.isNew) {
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(user.password, salt);
     user.password = hash;
@@ -37,4 +32,4 @@ userSchema.methods.comparePassword = async function (password) {
   return bcrypt.compare(password, user.password);
 };
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.model('User', userSchema);

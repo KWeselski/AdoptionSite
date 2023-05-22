@@ -3,15 +3,8 @@ import { useDispatch } from 'react-redux';
 
 import axios from 'axios';
 
-import { Button, Dialog, Loader } from '../../components';
+import { Button, Dialog, Loader, Table } from '../../components';
 import { reviewApplication } from '../../redux/actions/applications';
-
-const TableData = ({ label, children }) => (
-  <div key={label} className="flex w-full py-2 border-b text-start items-start">
-    <div className="w-1/3 font-semibold">{label}</div>
-    <div className="w-2/3">{children}</div>
-  </div>
-);
 
 const AplicationReviewPage = ({ id, onClose }) => {
   const dispatch = useDispatch();
@@ -57,36 +50,36 @@ const AplicationReviewPage = ({ id, onClose }) => {
               className="w-full h-[400px] object-contain mb-6 rounded"
             />
             <div className="flex flex-col items-start">
-              <TableData label="Name">
+              <Table.Data label="Name">
                 {personalInformation.firstName}
-              </TableData>
-              <TableData label="Name">{personalInformation.lastName}</TableData>
-              <TableData label="City">
+              </Table.Data>
+              <Table.Data label="Name">{personalInformation.lastName}</Table.Data>
+              <Table.Data label="City">
                 {personalInformation.address.city}
-              </TableData>
-              <TableData label="Street">
+              </Table.Data>
+              <Table.Data label="Street">
                 {personalInformation.address.street}
-              </TableData>
-              <TableData label="Phone">
+              </Table.Data>
+              <Table.Data label="Phone">
                 {personalInformation.phoneNumber}
-              </TableData>
-              <TableData label="Email">{personalInformation.email}</TableData>
-              <TableData label="Home type">{homeInformation.type}</TableData>
-              <TableData label="Childrens">
+              </Table.Data>
+              <Table.Data label="Email">{personalInformation.email}</Table.Data>
+              <Table.Data label="Home type">{homeInformation.type}</Table.Data>
+              <Table.Data label="Childrens">
                 {homeInformation.children}
-              </TableData>
-              <TableData label="Previous Pets">
+              </Table.Data>
+              <Table.Data label="Previous Pets">
                 {experience.previousPets}
-              </TableData>
-              <TableData label="Pet duration">
+              </Table.Data>
+              <Table.Data label="Pet duration">
                 {experience.petDuration}
-              </TableData>
-              <TableData label="Activity plans">
+              </Table.Data>
+              <Table.Data label="Activity plans">
                 {careAndActivityPlans.activityType.join(', ')}
-              </TableData>
-              <TableData label="Daily exercises plans">
+              </Table.Data>
+              <Table.Data label="Daily exercises plans">
                 {careAndActivityPlans.dailyExercise.join(', ')}
-              </TableData>
+              </Table.Data>
             </div>
             <div className="flex flex-row items-center justify-around w-full mt-4">
               <Button

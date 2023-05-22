@@ -1,29 +1,18 @@
-import React from "react";
+import React from 'react';
 
-const Button = ({
-  children,
-  variant,
-  onClick,
-  icon,
-  type,
-}) => {
-  let buttonClass = "";
+import { styles } from '../styles';
 
-  if (variant === "primary") {
-    buttonClass =
-      "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-full flex items-center justify-center";
-  } else if (variant === "secondary") {
-    buttonClass =
-      "bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded  flex items-center justify-center";
+const Button = ({ children, variant, onClick, type }) => {
+  let buttonClass = '';
+
+  if (variant === 'primary') {
+    buttonClass = `bg-green-500 hover:bg-green-700 ${styles.button}`;
+  } else if (variant === 'secondary') {
+    buttonClass = `bg-gray-500 hover:bg-gray-700 ${styles.button}`;
   }
 
   return (
     <button className={buttonClass} onClick={onClick} type={type}>
-      {icon && (
-        <span className="mr-2">
-          <img className="w-8 h-8" src={icon} alt="button icon" />
-        </span>
-      )}
       {children}
     </button>
   );

@@ -1,12 +1,14 @@
 import axios from 'axios';
 
+import { SET_PETS, DELETE_PET } from '../constants';
+
 export const setPets = (pets) => ({
-  type: 'SET_PETS',
+  type: SET_PETS,
   payload: pets,
 });
 
 export const deletePetSucess = (id) => ({
-  type: 'DELETE_PET',
+  type: DELETE_PET,
   payload: id,
 });
 

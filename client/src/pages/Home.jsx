@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import {PetsList, SectionHero} from '../components';
+import { PetsList, SectionHero } from '../components';
 import { partners, statistics } from '../constants';
 import styles from '../styles';
 
@@ -40,9 +40,7 @@ const Home = () => {
         description="Search for dogs and cats who need a home."
       />
       <section className="flex md:flex-row flex-col p-4 ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 w-full">
-          <PetsList pets={data.pets} />
-        </div>
+          <PetsList pets={data.pets} maxCol={4}/>
       </section>
       <SectionHero
         title="Statistics"
@@ -53,22 +51,19 @@ const Home = () => {
             <div
               key={index}
               className="max-w-sm mx-auto mb-10 md:mb-10 w-[420px] bg-white rounded-xl shadow-md flex flex-col items-center hover:shadow-lg  transform transition duration-500 ease-in-out hover:scale-105 cursor-pointer px-5 py-3"
-              style={{
-                animationDelay: `${index * 0.1}s`,
-              }}
             >
               <div className="flex-shrink-0 relative w-full">
-                <div className="flex flex-col md:flex-row items-center justify-between ">
+                <div className={`${styles.flexBetween} flex-col md:flex-row `}>
                   <img
                     src={statistic.icon}
                     alt={statistic.title}
-                    className="w-[64px] h-[64px] mr-2 animate-fade-in-up"
+                    className="w-[64px] h-[64px] mr-2"
                   />
                   <span className="text-xl">
-                    <p className="text-green-700 font-bold text-[32px] p-2 animate-fade-in-up">
+                    <p className="text-green-700 font-bold text-[32px] p-2">
                       {data.stats[statistic.key]}
                     </p>
-                    <span className="text-gray-500 font-semibold animate-fade-in-up">
+                    <span className="text-gray-500 font-semibold">
                       {statistic.title}
                     </span>
                   </span>

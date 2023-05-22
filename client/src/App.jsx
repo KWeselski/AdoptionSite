@@ -1,7 +1,8 @@
 import { Route, Routes } from 'react-router-dom';
 
 import './App.css';
-import { Footer, NavBar } from './components';
+import Footer from './components/Footer';
+import NavBar from './components/NavBar';
 import AdminPage from './pages/AdminPage';
 import AdoptionPage from './pages/AdoptionPage';
 import AnimalsList from './pages/AnimalsList';
@@ -34,7 +35,6 @@ function App() {
           </div>
         </div>
       </div>
-
       <Footer />
     </div>
   );

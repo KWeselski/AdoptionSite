@@ -9,115 +9,117 @@ import {
   dog,
   cat,
   house,
-} from "../assets";
+} from '../assets';
 
 export const navLinks = [
   {
-    url: "/how-helps",
-    title: "How you can help?",
+    url: '/how-helps',
+    title: 'How you can help?',
   },
   {
-    url: "/animals",
-    title: "Animals for adoption",
+    url: '/animals',
+    title: 'Animals for adoption',
   },
 ];
 
 export const footerLinks = {
   contactInfo: {
-    phoneNumber: "+48 123 456 789",
-    email: "info@example.com",
-    address: "ul. Przykładowa 1, Miasto",
+    phoneNumber: '+48 123 456 789',
+    email: 'info@example.com',
+    address: 'ul. Przykładowa 1, Miasto',
   },
   sections: [
     {
-      title: "Strona główna",
-      link: "/",
+      title: 'Strona główna',
+      link: '/',
     },
     {
-      title: "Lista Zwierząt",
-      link: "/lista-zwierzat",
+      title: 'Lista Zwierząt',
+      link: '/lista-zwierzat',
     },
     {
-      title: "Jak Adoptować",
-      link: "/jak-adoptowac",
+      title: 'Jak Adoptować',
+      link: '/jak-adoptowac',
     },
     {
-      title: "O Nas",
-      link: "/o-nas",
+      title: 'O Nas',
+      link: '/o-nas',
     },
   ],
-  privacyPolicyLink: "/polityka-prywatnosci",
-  termsOfServiceLink: "/regulamin",
+  privacyPolicyLink: '/polityka-prywatnosci',
+  termsOfServiceLink: '/regulamin',
   socialMediaLinks: [
     {
-      platform: "Facebook",
+      platform: 'Facebook',
       icon: facebook,
-      link: "https://www.facebook.com/example",
+      link: 'https://www.facebook.com/example',
     },
     {
-      platform: "Instagram",
+      platform: 'Instagram',
       icon: instagram,
-      link: "https://www.instagram.com/example",
+      link: 'https://www.instagram.com/example',
     },
     {
-      platform: "Twitter",
+      platform: 'Twitter',
       icon: twitter,
-      link: "https://www.twitter.com/example",
+      link: 'https://www.twitter.com/example',
     },
   ],
-  legalInfo: "© 2023 Przykładowa Organizacja. Wszelkie prawa zastrzeżone.",
-  partners: ["Nazwa Partnera 1", "Nazwa Partnera 2", "Nazwa Partnera 3"],
+  legalInfo: '© 2023 Przykładowa Organizacja. Wszelkie prawa zastrzeżone.',
+  partners: ['Nazwa Partnera 1', 'Nazwa Partnera 2', 'Nazwa Partnera 3'],
   usefulLinks: [
     {
-      title: "Schroniska dla Zwierząt",
-      link: "https://www.example.com/schroniska",
+      title: 'Schroniska dla Zwierząt',
+      link: 'https://www.example.com/schroniska',
     },
     {
-      title: "Organizacje dobroczynne",
-      link: "https://www.example.com/organizacje",
+      title: 'Organizacje dobroczynne',
+      link: 'https://www.example.com/organizacje',
     },
     {
-      title: "Strony o adopcji zwierząt",
-      link: "https://www.example.com/adopcja",
+      title: 'Strony o adopcji zwierząt',
+      link: 'https://www.example.com/adopcja',
     },
   ],
   copyrightInfo:
-    "Wszystkie zdjęcia użyte na stronie są objęte prawami autorskimi.",
+    'Wszystkie zdjęcia użyte na stronie są objęte prawami autorskimi.',
 };
 
 export const partners = [
   {
     image: partner_1,
-    name: "Best Zoo",
+    name: 'Best Zoo',
   },
   {
     image: partner_2,
-    name: "Best Zoo",
+    name: 'Best Zoo',
   },
   {
     image: partner_3,
-    name: "Best Zoo",
+    name: 'Best Zoo',
   },
   {
     image: partner_4,
-    name: "Best Zoo",
+    name: 'Best Zoo',
   },
 ];
 
 export const statistics = [
   {
     icon: dog,
-    key: "dogsCount",
-    title: "Dogs looking for a home",
+    key: 'dogsCount',
+    title: 'Dogs looking for a home',
   },
   {
     icon: cat,
-    key: "catsCount",
-    title: "Cats looking for a home",
+    key: 'catsCount',
+    title: 'Cats looking for a home',
   },
   {
     icon: house,
-    key: "adoptedCount",
-    title: "Animals adopted",
+    key: 'adoptedCount',
+    title: 'Animals adopted',
   },
 ];
+
+export const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';

@@ -1,13 +1,18 @@
+import { useDispatch } from 'react-redux';
+import { redirect } from 'react-router-dom';
+
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import Button from '../components/Button';
-import ErrorText from '../components/ErrorText';
-import Input from '../components/Input';
+import { Button, Checkbox, ErrorText, Field, Form, Input } from '../components';
+import { IS_DEVELOPMENT } from '../constants';
+import { register } from '../redux/actions/auth';
+import { styles } from '../styles';
 
 const RegisterForm = () => {
+  const dispatch = useDispatch();
+
   const validationSchema = Yup.object().shape({
-    name: Yup.string().required('Please enter username'),
     email: Yup.string()
       .email('Invalid email address')
       .required('Please enter email'),
@@ -16,63 +21,59 @@ const RegisterForm = () => {
       .required('Please enter password'),
   });
 
-  const onSubmit = async ({ name, email, password }) => {};
-
   const formik = useFormik({
     initialValues: {
-      name: '',
       email: '',
       password: '',
+      ...(IS_DEVELOPMENT ? { isSuperUser: false } : null),
     },
     validateOnChange: false,
     validationSchema,
-    onSubmit,
+    onSubmit: ({ email, password }) => {
+      dispatch(register(email, password))
+    },
   });
 
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <div className="mt-8">
-          <Input
-            name="name"
-            placeholder="Enter your username"
-            value={formik.values.name}
+    <Form onSubmit={formik.handleSubmit} fullWidth>
+      <Field>
+        <Input
+          name="email"
+          placeholder="Enter your email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+        />
+        {formik.touched.email && formik.errors.email && (
+          <ErrorText>{formik.errors.email}</ErrorText>
+        )}
+      </Field>
+      <Field>
+        <Input
+          name="password"
+          placeholder="Enter your password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+        />
+        {formik.touched.password && formik.errors.password && (
+          <ErrorText>{formik.errors.password}</ErrorText>
+        )}
+      </Field>
+      {IS_DEVELOPMENT && (
+        <Field>
+          <Checkbox
+            name="isSuperUser"
+            label="Create admin account (only for testing)"
+            values={formik.values.isSuperUser}
             onChange={formik.handleChange}
-            icon="fas fa-envelope"
           />
-          {formik.touched.name && formik.errors.name && (
-            <ErrorText>{formik.errors.name}</ErrorText>
-          )}
-        </div>
-        <div className="mt-8">
-          <Input
-            name="email"
-            placeholder="Enter your email"
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            icon="fas fa-envelope"
-          />
-          {formik.touched.email && formik.errors.email && (
-            <ErrorText>{formik.errors.email}</ErrorText>
-          )}
-        </div>
-        <div className="mt-8">
-          <Input
-            name="password"
-            placeholder="Enter your password"
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            icon="fas fa-lock"
-          />
-          {formik.touched.password && formik.errors.password && (
-            <p className="font-semibold">{formik.errors.password}</p>
-          )}
-        </div>
-        <div className="mt-8">
-          <Button variant="primary">Create account</Button>
-        </div>
-      </form>
-    </div>
+        </Field>
+      )}
+      <Field className={styles.flexCenter}>
+        <Button variant="primary" type="submit">
+          Create account
+        </Button>
+      </Field>
+    </Form>
   );
 };
 
