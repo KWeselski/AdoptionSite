@@ -77,7 +77,7 @@ const Home = () => {
         title="Partners and sponsors"
         description="We are proud to work with these partners and sponsors:"
       >
-        <div className="flex flex-row flex-wrap justify-between mt-10 p-16">
+        <div className="flex flex-row flex-wrap justify-center md:justify-between mt-10 p-16">
           {partners.map((partner, index) => (
             <img
               key={index}

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Paper } from '../../components';
 import { ShelterForm, PetForm } from '../../forms';
-import {styles} from "../../styles"
+import { styles } from '../../styles';
 
 const components = {
   addShelter: <ShelterForm />,

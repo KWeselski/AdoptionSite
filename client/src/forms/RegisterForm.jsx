@@ -29,8 +29,8 @@ const RegisterForm = () => {
     },
     validateOnChange: false,
     validationSchema,
-    onSubmit: ({ email, password }) => {
-      dispatch(register(email, password))
+    onSubmit: ({ email, password, isSuperUser }) => {
+      dispatch(register(email, password, isSuperUser));
     },
   });
 
@@ -63,8 +63,10 @@ const RegisterForm = () => {
           <Checkbox
             name="isSuperUser"
             label="Create admin account (only for testing)"
-            values={formik.values.isSuperUser}
-            onChange={formik.handleChange}
+            checked={formik.values.isSuperUser}
+            onChange={(event) => {
+              formik.setFieldValue(event.target.name, event.target.checked);
+            }}
           />
         </Field>
       )}

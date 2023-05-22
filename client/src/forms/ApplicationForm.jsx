@@ -1,6 +1,6 @@
-import { useParams } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -13,7 +13,9 @@ import {
   Checkbox,
   Form,
 } from '../components';
+import { setError } from '../redux/actions/errors';
 import styles from '../styles';
+import authRequest from '../utils/authRequest';
 
 const options = {
   previousPets: ['No', 'Yes'],
@@ -69,18 +71,26 @@ const validationSchema = Yup.object({
   }),
 });
 
-const createApplication = async (applicationData, petId) => {
+const createApplication = async (
+  applicationData,
+  petId,
+  navigate,
+  dispatch
+) => {
   try {
-    await axios.post('/api/applications/add', {
+    await authRequest.post('/api/applications/add', {
       pet: petId,
       ...applicationData,
     });
+    navigate(`/animals/${petId}`);
   } catch (error) {
-    console.error(error);
+    dispatch(setError(error.response.data.error));
   }
 };
 
 const ApplicationForm = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { id } = useParams();
 
   const formik = useFormik({
@@ -101,7 +111,7 @@ const ApplicationForm = () => {
       },
       experience: {
         previousPets: 'No',
-        petDuration: 'Less than 2 hours',
+        petDuration: '< 1 year',
       },
       careAndActivityPlans: {
         dailyExercise: [],
@@ -111,7 +121,7 @@ const ApplicationForm = () => {
     validationSchema: validationSchema,
     validateOnBlur: false,
     validateOnChange: false,
-    onSubmit: (values) => createApplication(values, id),
+    onSubmit: (values) => createApplication(values, id, navigate, dispatch),
   });
 
   return (
