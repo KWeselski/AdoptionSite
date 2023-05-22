@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Button, Pagination, Table, Loader, Paper } from '../../components';
 import { fetchApplications } from '../../redux/actions/applications.js';
-import AplicationReviewPage from './AplicationReviewPage';
+import ApplicationReviewPage from './ApplicationReviewPage';
 
 const ApplicationsPage = () => {
   const [open, setOpen] = useState(false);
@@ -26,9 +26,7 @@ const ApplicationsPage = () => {
     <Loader data={applications}>
       {(applications) => (
         <>
-          {open ? (
-            <AplicationReviewPage id={id} onClose={() => setOpen(false)} />
-          ) : null}
+          <ApplicationReviewPage isOpen={open} id={id} onClose={() => setOpen(false)} />
           <Paper>
             <Pagination values={applications} perPage={8}>
               {(currentData, key) => (

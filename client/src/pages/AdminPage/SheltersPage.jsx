@@ -1,8 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-
-import axios from 'axios';
-
 import { edit, trash } from '../../assets';
 import {
   Action,

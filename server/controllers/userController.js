@@ -1,23 +1,25 @@
-import { User } from '../models/userModel.js';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import { User } from '../models/userModel.js';
 
 dotenv.config();
 const TOKEN_EXPIRATION = 60 * 60;
+
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 const createUser = async (req, res) => {
   try {
     const user = new User({
       email: req.body.email,
       password: req.body.password,
+      isSuperUser: req.body.isSuperUser,
     });
     await user.save();
     const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT_KEY);
 
     res.send({ token });
   } catch (err) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: 'Unable to create user' });
   }
 };
 
@@ -34,21 +36,21 @@ const loginUser = async (req, res) => {
     if (!user || !(await user.comparePassword(password, user.password))) {
       return res.status(401).json({ message: 'Invalid email or password' });
     }
-
-    const token = jwt.sign({ userId: user._id }, process.env.SECRET_JWT_KEY, {
+    const token = jwt.sign({ id: user._id }, process.env.SECRET_JWT_KEY, {
       expiresIn: TOKEN_EXPIRATION,
     });
-
-    req.session.userId = user._id;
 
     res.status(201).json({
       token,
-      isSuperUser: user.isSuperUser,
-      expiresIn: TOKEN_EXPIRATION,
     });
   } catch (err) {
-    res.status(500).json({ message: 'Failed to login user' });
+    res.status(500).json({ error: 'Failed to login user' });
   }
 };
 
-export { createUser, loginUser };
+const checkRole = (req, res) => {
+  const { isSuperUser } = req.user;
+  return res.status(200).json({ isSuperUser: isSuperUser });
+};
+
+export { checkRole, createUser, loginUser };

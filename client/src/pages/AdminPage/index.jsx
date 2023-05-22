@@ -10,14 +10,14 @@ import SheltersPage from './SheltersPage';
 const Tabs = {
   ADD_ANIMAL: 'addAnimal',
   ADD_SHELTER: 'addShelter',
+  ANIMALS: 'animals',
   APPLICATIONS: 'applications',
-  DOGS: 'dogs',
   EDIT_SHELTER: 'editShelter',
-  SHELTERS: 'shelters'
+  SHELTERS: 'shelters',
 };
 
 const AdminPage = () => {
-  const [activeTab, setActiveTab] = useState('dogs');
+  const [activeTab, setActiveTab] = useState('animals');
   const [editId, setEditId] = useState(null);
 
   const handleTabClick = (tab, editId) => {
@@ -26,7 +26,7 @@ const AdminPage = () => {
   };
   const initialTabs = [
     {
-      id: Tabs.DOGS,
+      id: Tabs.ANIMALS,
       component: (active) =>
         active && <AnimalsPage handleTab={handleTabClick} />,
     },
@@ -58,16 +58,16 @@ const AdminPage = () => {
     <div className="container mx-auto py-8">
       <SectionHero title="Administrator dashboard" />
       <div className="flex space-x-4 mb-4">
-        <Button variant="primary" onClick={() => handleTabClick('dogs')}>
+        <Button variant="primary" onClick={() => handleTabClick(Tabs.ANIMALS)}>
           Manage animals
         </Button>
         <Button
           variant="primary"
-          onClick={() => handleTabClick('applications')}
+          onClick={() => handleTabClick(Tabs.APPLICATIONS)}
         >
           Manage applications
         </Button>
-        <Button variant="primary" onClick={() => handleTabClick('shelters')}>
+        <Button variant="primary" onClick={() => handleTabClick(Tabs.SHELTERS)}>
           Manage shelters
         </Button>
       </div>

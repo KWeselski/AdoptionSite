@@ -1,6 +1,8 @@
 import axios from 'axios';
 
+import authRequest from '../../utils/authRequest';
 import { SET_SHELTERS, DELETE_SHELTER } from '../constants';
+import { setError } from './errors';
 
 export const setShelters = (shelters) => ({
   type: SET_SHELTERS,
@@ -15,10 +17,10 @@ export const deleteShelterSuccess = (id) => ({
 export const deleteShelter = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`/api/shelters/${id}`);
+      await authRequest.delete(`/api/shelters/${id}`);
       dispatch(deleteShelterSuccess(id));
     } catch (error) {
-      console.error(error);
+      dispatch(setError(error.response.data));
     }
   };
 };
@@ -29,7 +31,7 @@ export const fetchShelters = () => {
       const res = await axios.get('/api/shelters');
       dispatch(setShelters(res.data));
     } catch (error) {
-      console.error(error);
+      dispatch(setError(error.response.data));
     }
   };
 };

@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 import { Input, Button, ErrorText, Field, Form } from '../components';
 import { styles } from '../styles';
+import authRequest from '../utils/authRequest';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Add shelter name'),
@@ -22,8 +23,8 @@ const validationSchema = Yup.object({
 const submitShelter = async (shelterData, resetForm, isEdit, id) => {
   try {
     isEdit
-      ? await axios.put(`api/shelters/${id}`, shelterData)
-      : await axios.post('api/shelters/add', shelterData);
+      ? await authRequest.put(`api/shelters/${id}`, shelterData)
+      : await authRequest.post('api/shelters/add', shelterData);
     resetForm();
   } catch (error) {
     console.error(error);

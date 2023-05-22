@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 
-import axios from 'axios';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
@@ -20,6 +19,7 @@ import {
 } from '../components';
 import { useShelters } from '../hooks';
 import { styles } from '../styles';
+import authRequest from '../utils/authRequest';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Add animal name'),
@@ -40,7 +40,6 @@ const ShelterDialog = ({ isOpen, selectShelter, onClose }) => {
   if (!isOpen) return null;
 
   const shelters = useShelters();
-  console.log(shelters);
   return (
     <Loader data={shelters}>
       {(shelters) => (
@@ -101,7 +100,7 @@ const PetForm = () => {
     validateOnChange: false,
     onSubmit: async (values, { resetForm }) => {
       try {
-        await axios.post('api/animals/add', { ...values, image });
+        await authRequest.post('api/animals/add', { ...values, image });
         resetForm();
       } catch (error) {
         console.error(error);

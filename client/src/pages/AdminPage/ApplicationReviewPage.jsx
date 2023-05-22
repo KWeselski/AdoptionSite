@@ -1,19 +1,20 @@
 import { useCallback, useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import axios from 'axios';
-
 import { Button, Dialog, Loader, Table } from '../../components';
 import { reviewApplication } from '../../redux/actions/applications';
+import authRequest from '../../utils/authRequest';
 
-const AplicationReviewPage = ({ id, onClose }) => {
+const AplicationReviewPage = ({ isOpen=false, id, onClose }) => {
+  if (!isOpen) return null;
+  
   const dispatch = useDispatch();
   const [application, setApplication] = useState(null);
 
   useEffect(() => {
     const fetchApplication = async () => {
       try {
-        const response = await axios.get(`/api/applications/${id}`);
+        const response = await authRequest.get(`/api/applications/${id}`);
         setApplication(response.data);
       } catch (error) {
         console.error(error);
@@ -38,6 +39,7 @@ const AplicationReviewPage = ({ id, onClose }) => {
         homeInformation,
         experience,
         careAndActivityPlans,
+        status,
       }) => (
         <Dialog onClose={onClose}>
           <div className="p-4">
@@ -53,7 +55,9 @@ const AplicationReviewPage = ({ id, onClose }) => {
               <Table.Data label="Name">
                 {personalInformation.firstName}
               </Table.Data>
-              <Table.Data label="Name">{personalInformation.lastName}</Table.Data>
+              <Table.Data label="Name">
+                {personalInformation.lastName}
+              </Table.Data>
               <Table.Data label="City">
                 {personalInformation.address.city}
               </Table.Data>
@@ -81,20 +85,22 @@ const AplicationReviewPage = ({ id, onClose }) => {
                 {careAndActivityPlans.dailyExercise.join(', ')}
               </Table.Data>
             </div>
-            <div className="flex flex-row items-center justify-around w-full mt-4">
-              <Button
-                variant="primary"
-                onClick={() => handleReviewApplication()}
-              >
-                Reject
-              </Button>
-              <Button
-                variant="primary"
-                onClick={() => handleReviewApplication(true)}
-              >
-                Accept
-              </Button>
-            </div>
+            {status === 'Pending' && (
+              <div className="flex flex-row items-center justify-around w-full mt-4">
+                <Button
+                  variant="primary"
+                  onClick={() => handleReviewApplication()}
+                >
+                  Reject
+                </Button>
+                <Button
+                  variant="primary"
+                  onClick={() => handleReviewApplication(true)}
+                >
+                  Accept
+                </Button>
+              </div>
+            )}
           </div>
         </Dialog>
       )}

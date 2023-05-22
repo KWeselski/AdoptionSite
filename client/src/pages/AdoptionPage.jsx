@@ -34,12 +34,15 @@ const AdoptionPage = () => {
     const fetchPet = async () => {
       const { data } = await axios.get(`/api/animals/${id}`);
       setPet(data);
-
-      setShelter(shelters.find((shelter) => shelter._id === data.shelter));
     };
-
-    fetchPet();
-  }, []);
+    const fetchShelters = async () => {
+      if (shelters) {
+        setShelter(shelters.find((shelter) => shelter._id === pet.shelter));
+      }
+    };
+    if (!pet) fetchPet();
+    if (!shelter && pet) fetchShelters();
+  }, [pet]);
 
   return (
     <div className={`${styles.flexStart}`}>

@@ -1,3 +1,4 @@
+import { setError } from '../actions/errors';
 import {
   USER_LOGIN_FAIL,
   USER_LOGIN_REQUEST,
@@ -11,7 +12,6 @@ import {
 const initialState = {
   token: localStorage.getItem('token') || null,
   loading: false,
-  isSuperUser: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -26,13 +26,17 @@ const authReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         token: action.payload.token,
-        isSuperUser: action.payload.isSuperUser,
       };
     case USER_LOGIN_FAIL:
     case USER_REGISTER_FAIL:
-      return { ...state, loading: false, error: action.payload };
+      setError(action.payload);
+      return { ...state, loading: false };
     case USER_LOGOUT:
-      return { ...state, token: null, isSuperUser: false };
+      return {
+        ...state,
+        token: null,
+        isSuperUser: false,
+      };
     default:
       return state;
   }

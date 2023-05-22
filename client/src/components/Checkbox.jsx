@@ -1,12 +1,12 @@
 import { styles } from '../styles';
 
-const Checkbox = ({ label, name, value, handleChange }) => (
+const Checkbox = ({ label, name, checked, onChange }) => (
   <label className="block">
     <input
       type="checkbox"
       name={name}
-      value={value}
-      onChange={handleChange}
+      checked={checked}
+      onChange={onChange}
       className={`mr-2 accent-green-700`}
     />
     {label}

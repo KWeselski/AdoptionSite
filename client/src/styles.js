@@ -15,6 +15,9 @@ export const styles = {
 
   paper: 'bg-white p-6 rounded-lg shadow-lg',
   h2: 'text-2xl font-bold mb-4',
+
+  navMobileLink:
+    'block px-3 py-2 rounded-md text-base font-medium text-white bg-green-500',
 };
 
 export const layout = {

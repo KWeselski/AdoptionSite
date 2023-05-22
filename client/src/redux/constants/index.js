@@ -20,3 +20,7 @@ export const DELETE_PET = 'DELETE_PET';
 // SHELTERS
 export const SET_SHELTERS = 'SET_SHELTERS';
 export const DELETE_SHELTER = 'DELETE_SHELTER';
+
+// ERROR
+export const SET_ERROR = 'SET_ERROR';
+export const CLEAR_ERROR = 'CLEAR_ERROR';

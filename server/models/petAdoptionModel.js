@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const petAdoptionSchema = new Schema(
@@ -15,12 +15,12 @@ const petAdoptionSchema = new Schema(
     },
     species: {
       type: String,
-      enum: ["Dog", "Cat"],
+      enum: ['Dog', 'Cat'],
       required: true,
     },
     gender: {
       type: String,
-      enum: ["Male", "Female"],
+      enum: ['Male', 'Female'],
       required: true,
     },
     age: {
@@ -33,7 +33,7 @@ const petAdoptionSchema = new Schema(
       type: String,
       maxLength: 70,
       required: false,
-      default: "Mixed",
+      default: 'Mixed',
     },
     city: {
       type: String,
@@ -42,28 +42,28 @@ const petAdoptionSchema = new Schema(
     },
     size: {
       type: String,
-      enum: ["Small", "Medium", "Large"],
+      enum: ['Small', 'Medium', 'Large'],
       required: true,
     },
     description: {
       type: String,
-      maxLength: 500,
+      maxLength: 1500,
       required: true,
     },
     image: String,
     status: {
       type: String,
-      enum: ["Adopted", "Available"],
-      default: "Available",
+      enum: ['Adopted', 'Available'],
+      default: 'Available',
     },
     adoptedBy: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: 'User',
       default: null,
     },
     shelter: {
       type: Schema.Types.ObjectId,
-      ref: "Shelter",
+      ref: 'Shelter',
       default: null,
     },
   },
@@ -72,4 +72,4 @@ const petAdoptionSchema = new Schema(
   }
 );
 
-export const PetAdoption = mongoose.model("PetAdoption", petAdoptionSchema);
+export const PetAdoption = mongoose.model('PetAdoption', petAdoptionSchema);

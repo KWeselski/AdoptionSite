@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+import authRequest from '../../utils/authRequest';
 import { SET_PETS, DELETE_PET } from '../constants';
 
 export const setPets = (pets) => ({
@@ -15,7 +16,7 @@ export const deletePetSucess = (id) => ({
 export const deletePet = (id) => {
   return async (dispatch) => {
     try {
-      await axios.delete(`api/animals/${id}`);
+      await authRequest.delete(`api/animals/${id}`);
       dispatch(deletePetSucess(id));
     } catch (error) {
       console.error(error);
@@ -26,7 +27,7 @@ export const deletePet = (id) => {
 export const fetchPets = () => {
   return async (dispatch) => {
     try {
-      const res = await axios.get('api/animals/manage');
+      const res = await authRequest.get('api/animals/manage');
       dispatch(setPets(res.data));
     } catch (error) {
       console.error(error);

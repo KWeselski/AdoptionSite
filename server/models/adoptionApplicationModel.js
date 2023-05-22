@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const adoptionApplicationSchema = new Schema(
@@ -7,11 +7,6 @@ const adoptionApplicationSchema = new Schema(
       firstName: {
         type: String,
         maxlength: 50,
-        validate: {
-          validator: function (v) {
-            return !/\s/.test(v);
-          },
-        },
         required: true,
       },
       lastName: {
@@ -44,19 +39,19 @@ const adoptionApplicationSchema = new Schema(
       },
     },
     homeInformation: {
-      type: { type: String, enum: ["Apartment", "House"], required: true },
-      children: { type: String, enum: ["Yes", "No"], required: true },
+      type: { type: String, enum: ['Apartment', 'House'], required: true },
+      children: { type: String, enum: ['Yes', 'No'], required: true },
     },
     experience: {
-      previousPets: { type: String, enum: ["Yes", "No"], required: true },
+      previousPets: { type: String, enum: ['Yes', 'No'], required: true },
       petDuration: {
         type: String,
         enum: [
-          "< 1 year",
-          "1-3 years",
-          "4-6 years",
-          "6-8 years",
-          " More than 8 years",
+          '< 1 year',
+          '1-3 years',
+          '4-6 years',
+          '6-8 years',
+          'More than 8 years',
         ],
         required: true,
       },
@@ -66,11 +61,11 @@ const adoptionApplicationSchema = new Schema(
         {
           type: String,
           enum: [
-            "Short walks",
-            "Medium-length walks",
-            "Long walks or runs",
-            "Home exercises and games",
-            "Joint exercises",
+            'Short walks',
+            'Medium-length walks',
+            'Long walks or runs',
+            'Home exercises and games',
+            'Joint exercises',
           ],
           required: true,
         },
@@ -79,11 +74,11 @@ const adoptionApplicationSchema = new Schema(
         {
           type: String,
           enum: [
-            "Outdoor activities",
-            "Training",
-            "Home games",
-            "Spending time with other dogs",
-            "Relaxation",
+            'Outdoor activities',
+            'Training',
+            'Home games',
+            'Spending time with other dogs',
+            'Relaxation',
           ],
           required: true,
         },
@@ -91,13 +86,18 @@ const adoptionApplicationSchema = new Schema(
     },
     pet: {
       type: Schema.Types.ObjectId,
-      ref: "PetAdoption",
+      ref: 'PetAdoption',
       required: true,
     },
     status: {
       type: String,
-      enum: ["Pending", "Accepted", "Rejected"],
-      default: "Pending",
+      enum: ['Pending', 'Accepted', 'Rejected'],
+      default: 'Pending',
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   {
@@ -106,6 +106,6 @@ const adoptionApplicationSchema = new Schema(
 );
 
 export const AdoptionApplication = mongoose.model(
-  "AdoptionApplication",
+  'AdoptionApplication',
   adoptionApplicationSchema
 );
