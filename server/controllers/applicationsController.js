@@ -30,13 +30,18 @@ const reviewApplication = async (req, res) => {
     if (!application) {
       return res.status(404).json({ error: 'Application not found' });
     }
-    if (accepted) {
+    if (accepted && application.status === STATUS.PENDING) {
       application.status = STATUS.ACCEPTED;
       const pet = await PetAdoption.findById(application.pet);
       if (!pet) {
         return res.status(404).json({ error: 'Pet not found' });
       }
-      pet.status = REJECTED;
+      pet.status = ADOPTED;
+      await AdoptionApplication.deleteMany({
+        pet: application.pet,
+        _id: { $ne: application._id },
+        status: STATUS.PENDING,
+      });
       await pet.save();
     } else {
       application.status = STATUS.REJECTED;

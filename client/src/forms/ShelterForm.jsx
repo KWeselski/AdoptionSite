@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import axios from 'axios';
 import { useFormik } from 'formik';
@@ -7,6 +8,7 @@ import * as Yup from 'yup';
 import { Input, Button, ErrorText, Field, Form } from '../components';
 import { styles } from '../styles';
 import authRequest from '../utils/authRequest';
+import { setError } from '../redux/actions/errors';
 
 const validationSchema = Yup.object({
   name: Yup.string().required('Add shelter name'),
@@ -20,18 +22,19 @@ const validationSchema = Yup.object({
   }),
 });
 
-const submitShelter = async (shelterData, resetForm, isEdit, id) => {
+const submitShelter = async (shelterData, resetForm, isEdit, id, dispatch) => {
   try {
     isEdit
       ? await authRequest.put(`api/shelters/${id}`, shelterData)
       : await authRequest.post('api/shelters/add', shelterData);
     resetForm();
   } catch (error) {
-    console.error(error);
+    dispatch(setError(error.response.data.error));
   }
 };
 
 const shelterForm = ({ isEdit, id }) => {
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -46,7 +49,7 @@ const shelterForm = ({ isEdit, id }) => {
     validateOnBlur: false,
     validateOnChange: false,
     onSubmit: (values, { resetForm }) => {
-      submitShelter(values, resetForm, isEdit, id);
+      submitShelter(values, resetForm, isEdit, id, dispatch);
     },
   });
 
@@ -123,7 +126,7 @@ const shelterForm = ({ isEdit, id }) => {
         </Form.Column>
       </Form.Row>
       <Field className={styles.flexCenter}>
-        <Button variant="primary">
+        <Button variant="primary" type="submit">
           {isEdit ? 'Edit Shelter' : 'Add Shelter'}
         </Button>
       </Field>

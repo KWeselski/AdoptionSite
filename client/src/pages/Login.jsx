@@ -1,5 +1,6 @@
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Button } from '../components';
 import LoginForm from '../forms/LoginForm';
@@ -35,10 +36,17 @@ const LoggedIn = ({ handleLogout }) => (
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const token = useSelector((state) => state.auth.token);
 
-  const handleLogin = ({ email, password }) => dispatch(login(email, password));
-  const handleLogout = () => dispatch(logout());
+  const handleLogin = ({ email, password }) => {
+    dispatch(login(email, password));
+    navigate('/');
+  };
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+  };
 
   return (
     <div className=" flex justify-center h-screen">

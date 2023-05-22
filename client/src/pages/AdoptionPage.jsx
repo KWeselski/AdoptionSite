@@ -27,7 +27,6 @@ const AdoptionPage = () => {
   const { id } = useParams();
   const [pet, setPet] = useState(null);
   const [shelter, setShelter] = useState(null);
-
   const shelters = useShelters();
 
   useEffect(() => {
@@ -36,13 +35,13 @@ const AdoptionPage = () => {
       setPet(data);
     };
     const fetchShelters = async () => {
-      if (shelters) {
+      if (shelters && pet) {
         setShelter(shelters.find((shelter) => shelter._id === pet.shelter));
       }
     };
     if (!pet) fetchPet();
-    if (!shelter && pet) fetchShelters();
-  }, [pet]);
+    fetchShelters();
+  }, [pet, shelters]);
 
   return (
     <div className={`${styles.flexStart}`}>

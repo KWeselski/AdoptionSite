@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import  {trash } from '../../assets';
+import { trash } from '../../assets';
 import {
   Action,
   Button,
@@ -14,13 +14,18 @@ import {
 } from '../../components';
 import { fetchPets, deletePet } from '../../redux/actions/pets.js';
 
+const STATUS = {
+  ADOPTED: 'Adopted',
+  AVAILABLE: 'Available',
+};
+
 const AnimalsPage = ({ handleTab }) => {
   const dispatch = useDispatch();
   const pets = useSelector((state) => state.pets);
   const [filters, setFilters] = useState({
     name: '',
     breed: '',
-    status: 'Available',
+    status: STATUS.AVAILABLE,
   });
 
   const handleChange = (event) => {
@@ -39,7 +44,7 @@ const AnimalsPage = ({ handleTab }) => {
 
   const onDelete = useCallback(
     async (id) => {
-        dispatch(deletePet(id));
+      dispatch(deletePet(id));
     },
     [dispatch]
   );
@@ -91,7 +96,13 @@ const AnimalsPage = ({ handleTab }) => {
                       <Table.Cell>{breed}</Table.Cell>
                       <Table.Cell>{status}</Table.Cell>
                       <Table.Actions>
-                        <Action variant="primary" icon={trash} onClick={() => onDelete(_id)}/>
+                        {status === STATUS.AVAILABLE && (
+                          <Action
+                            variant="primary"
+                            icon={trash}
+                            onClick={() => onDelete(_id)}
+                          />
+                        )}
                       </Table.Actions>
                     </Table.Row>
                   ))}
