@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Button, Pagination, Table, Loader } from '../../components';
+import { Button, Pagination, Table, Loader, Paper } from '../../components';
 import { fetchApplications } from '../../redux/actions/applications.js';
 import AplicationReviewPage from './AplicationReviewPage';
 
@@ -29,11 +29,11 @@ const ApplicationsPage = () => {
           {open ? (
             <AplicationReviewPage id={id} onClose={() => setOpen(false)} />
           ) : null}
-          <div className="bg-white p-6 rounded-lg shadow">
+          <Paper>
             <Pagination values={applications} perPage={8}>
-              {(currentData) => (
+              {(currentData, key) => (
                 <Table>
-                  <Table.Row key={10} size={5}>
+                  <Table.Row key={key} size={5}>
                     <Table.Header>Name</Table.Header>
                     <Table.Header>Email</Table.Header>
                     <Table.Header>City</Table.Header>
@@ -62,7 +62,7 @@ const ApplicationsPage = () => {
                 </Table>
               )}
             </Pagination>
-          </div>
+          </Paper>
         </>
       )}
     </Loader>

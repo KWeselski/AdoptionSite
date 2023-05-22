@@ -100,13 +100,9 @@ const AnimalsList = () => {
           </Filter>
         </div>
         <div className="w-full md:w-3/4">
-          {animals && animals.length > 1 ? (
+          {animals && animals.length > 0 ? (
             <Pagination values={animals} perPage={6}>
-              {(pets) => (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6 w-full">
-                  <PetsList pets={pets} />
-                </div>
-              )}
+              {(pets) => <PetsList pets={pets} maxCol={3} />}
             </Pagination>
           ) : (
             <div className="w-full flex">Not found</div>

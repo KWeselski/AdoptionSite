@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
 import axios from 'axios';
@@ -10,6 +10,7 @@ import {
   Filter,
   Loader,
   Pagination,
+  Paper,
   Table,
 } from '../../components';
 import { useShelters } from '../../hooks';
@@ -35,20 +36,13 @@ const SheltersPage = ({ handleTab }) => {
     );
   });
 
-  const onDelete = async (id) => {
-    try {
-      await axios.delete(`api/shelters/${id}`);
-      dispatch(deleteShelter(id));
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const onDelete = async (id) => dispatch(deleteShelter(id));
 
   return (
     <Loader data={filteredShelters}>
       {(shelters) => (
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex flex-col sm:flex-row justify-between items-center p-4">
+        <Paper>
+          <Filter.Row>
             <Filter.Header>
               <Filter.Input
                 name="name"
@@ -64,7 +58,7 @@ const SheltersPage = ({ handleTab }) => {
             <Button variant="primary" onClick={() => handleTab('addShelter')}>
               Add shelter
             </Button>
-          </div>
+          </Filter.Row>
           <Pagination values={shelters} perPage={8}>
             {(currentData) => (
               <Table>
@@ -95,7 +89,7 @@ const SheltersPage = ({ handleTab }) => {
               </Table>
             )}
           </Pagination>
-        </div>
+        </Paper>
       )}
     </Loader>
   );
